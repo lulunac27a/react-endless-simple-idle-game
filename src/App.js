@@ -1,11 +1,14 @@
-import './App.css';
-import { useState } from 'react';
+import "./App.css";
+import { useState } from "react";
 function App() {
-  const [points, setPoints] = useState(0);
+  //app compoment
+  const [points, setPoints] = useState(0); //set initial points to 0
   function addPointsFromClick() {
-    setPoints(points + 1);
+    //add points from clicking a button
+    setPoints(points + 1); //increase points by 1
   }
   return (
+    //dynamic app HTML output
     <div className="App">
       <header className="App-header">Endless Simple Idle Game</header>
       <p>Click the button to add points!</p>

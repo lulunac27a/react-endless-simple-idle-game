@@ -1,13 +1,14 @@
 body {
+  /*body styles*/
   margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen",
+    "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue",
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
 code {
-  font-family: 'Source Code Pro', Menlo, Monaco, Consolas, 'Courier New',
-    monospace;
+  font-family: "Source Code Pro", Menlo, Monaco, Consolas, "Courier New",
+    monospace; /*set font for code block to monospaced font*/
 }
