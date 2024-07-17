@@ -15,4 +15,4 @@ Run `npm run test` to run unit tests after installing dependencies.
 
 ## Building The App
 
-Run `npm run build` to build the app for production mode and adds the `build` folder with minified code. 
+Run `npm run build` to build the app for production mode and generates the `build` folder with minified code. 
