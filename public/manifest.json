@@ -1,6 +1,6 @@
 {
-  "short_name": "React App",
-  "name": "Create React App Sample",
+  "short_name": "Endless Simple Idle Game",
+  "name": "Endless Simple Idle Game using React",
   "icons": [
     {
       "src": "favicon.ico",
