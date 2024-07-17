@@ -7,11 +7,10 @@ function App() {
   }
   return (
     <div className="App">
-      <header className="App-header">
-        Endless Simple Idle Game
-      </header>
+      <header className="App-header">Endless Simple Idle Game</header>
       <p>Click the button to add points!</p>
-      Points: <div id="points-display">{points}</div><br />
+      Points: <div id="points-display">{points}</div>
+      <br />
       <button onClick={() => addPointsFromClick()}>Click to Add Points</button>
     </div>
   );
