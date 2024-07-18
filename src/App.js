@@ -18,9 +18,10 @@ function App() {
         Endless Simple Idle Game
       </header>
       <p>Click the button to add points!</p>
-      {/*display current points value*/}Points:{" "}
-      <div id="points-display">{points}</div>
-      <br />
+      {/*display current points value*/}
+      <p>
+        Points: <div id="points-display">{points}</div>
+      </p>
       {/*increase points from clicking a button*/}
       <button onClick={() => addPointsFromClick()}>Click to Add Points</button>
     </div>
