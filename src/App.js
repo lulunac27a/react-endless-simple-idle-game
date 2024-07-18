@@ -1,5 +1,5 @@
-import "./App.css";
-import { useState } from "react";
+import './App.css';
+import { useState } from 'react';
 function App() {
   //app compoment
   const [points, setPoints] = useState(0); //set initial points to 0
