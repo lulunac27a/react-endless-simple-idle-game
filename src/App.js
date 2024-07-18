@@ -1,5 +1,5 @@
-import './App.css';
-import { useState } from 'react';
+import "./App.css";
+import { useState } from "react";
 function App() {
   //app compoment
   const [points, setPoints] = useState(0); //set initial points to 0
@@ -33,7 +33,11 @@ function App() {
       {/*increase points from clicking a button*/}
       <button onClick={() => addPointsFromClick()}>Click to Add Points</button>
       {/*upgrade clicker button*/}
-      <button onClick={() => upgradeClicker()}>Upgrade Clicker</button>
+      <button onClick={() => upgradeClicker()}>
+        Upgrade Clicker
+        <br />
+        Cost: {10 * Math.pow(2, clickMultiplier - 1)}
+      </button>
     </div>
   );
 }
