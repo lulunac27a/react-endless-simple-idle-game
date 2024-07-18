@@ -3,9 +3,11 @@ import { useState } from 'react';
 function App() {
   //app compoment
   const [points, setPoints] = useState(0); //set initial points to 0
+  const [clicks, setClicks] = useState(0); //set initial clicks pressed to 0
   function addPointsFromClick() {
     //add points from clicking a button
     setPoints(points + 1); //increase points by 1 when button clicked
+    setClicks(clicks + 1); //increase clicks made by 1
   }
   return (
     //dynamic app HTML output
