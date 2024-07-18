@@ -13,7 +13,7 @@ function App() {
   function upgradeClicker() {
     //upgrade clicker
     if (points >= Math.pow(2, clickMultiplier)) {
-      setPoints(points - 10 * Math.pow(2, clickMultiplier - 1));
+      setPoints(points - 10 * Math.pow(2, clickMultiplier - 1)); //spend points
       setClickMultiplier(clickMultiplier + 1); //increase click multiplier by 1
     }
   }
