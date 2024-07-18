@@ -5,7 +5,7 @@ function App() {
   const [points, setPoints] = useState(0); //set initial points to 0
   function addPointsFromClick() {
     //add points from clicking a button
-    setPoints(points + 1); //increase points by 1
+    setPoints(points + 1); //increase points by 1 when button clicked
   }
   return (
     //dynamic app HTML output
