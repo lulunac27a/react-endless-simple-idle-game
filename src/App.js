@@ -1,7 +1,7 @@
 import './App.css';
 import { useState, useEffect } from 'react';
 function App() {
-  //app compoment
+  //app component
   const [points, setPoints] = useState(0); //set initial points to 0
   const [pointsPerSecond, setPointsPerSecond] = useState(0);
   const [clicks, setClicks] = useState(0); //set initial clicks pressed to 0
