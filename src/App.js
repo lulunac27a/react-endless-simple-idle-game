@@ -14,7 +14,7 @@ function App() {
     return () => {
       clearInterval(interval); //clear interval when component unmounts
     };
-  }, []);
+  }, [points, pointsPerSecond]);
   function addPointsFromClick() {
     //add points from clicking a button
     setPoints(points + clickMultiplier); //increase points by 1 when button clicked
@@ -29,8 +29,8 @@ function App() {
   }
   function upgradePointsPerSecond() {
     //upgrade points per second
-    if (points >= Math.pow(2, pointsPerSecond)) {
-      setPoints(points - Math.pow(2, pointsPerSecond));
+    if (points >= 10 * Math.pow(2, pointsPerSecond)) {
+      setPoints(points - 10 * Math.pow(2, pointsPerSecond));
       setPointsPerSecond(pointsPerSecond + 1); //increase points per second
     }
   }
