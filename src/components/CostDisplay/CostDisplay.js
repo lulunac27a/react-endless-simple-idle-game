@@ -4,7 +4,7 @@ import styles from './CostDisplay.module.css';
 
 const CostDisplay = ({ cost }) => (
   <div className={styles.CostDisplay} data-testid="CostDisplay">
-    Cost: {cost}
+    Cost: <div id="cost-value">{cost}</div>
   </div>
 );
 

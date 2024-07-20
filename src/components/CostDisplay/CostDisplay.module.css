@@ -1,2 +1,6 @@
 .CostDisplay {
+  text-align: center;
+}
+#cost-value {
+  font-weight: bold;
 }
