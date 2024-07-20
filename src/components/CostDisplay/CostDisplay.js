@@ -8,7 +8,7 @@ const CostDisplay = ({ cost }) => (
   </div>
 );
 
-CostDisplay.propTypes = {};
+CostDisplay.propTypes = { cost: PropTypes.number.isRequired };
 
 CostDisplay.defaultProps = {};
 
