@@ -2,7 +2,7 @@ import React, { lazy, Suspense } from 'react';
 
 const LazyCostDisplay = lazy(() => import('./CostDisplay'));
 
-const CostDisplay = props => (
+const CostDisplay = (props) => (
   <Suspense fallback={null}>
     <LazyCostDisplay {...props} />
   </Suspense>

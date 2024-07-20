@@ -2,7 +2,7 @@
 import CostDisplay from './CostDisplay';
 
 export default {
-  title: "CostDisplay",
+  title: 'CostDisplay',
 };
 
 export const Default = () => <CostDisplay />;
