@@ -1,6 +1,6 @@
 .CostDisplay {
-  text-align: center;
+  text-align: center; /*center cost display text component*/
 }
 #cost-value {
-  font-weight: bold;
+  font-weight: bold; /*bold numeric cost value*/
 }

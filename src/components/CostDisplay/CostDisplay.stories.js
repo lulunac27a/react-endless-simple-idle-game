@@ -5,7 +5,7 @@ export default {
   title: 'CostDisplay',
 };
 
-export const Default = () => <CostDisplay />;
+export const Default = () => <CostDisplay />; //default JSX component render
 
 Default.story = {
   name: 'default',
