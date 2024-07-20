@@ -7,10 +7,12 @@ function App() {
   const [pointsPerSecond, setPointsPerSecond] = useState(0);
   const [clicks, setClicks] = useState(0); //set initial clicks pressed to 0
   const [clickMultiplier, setClickMultiplier] = useState(1);
+  const [seconds, setSeconds] = useState(0); //set initial seconds played to 0
   useEffect(() => {
     const interval = setInterval(() => {
       //increase points every second
-      setPoints(points + pointsPerSecond);
+      setPoints(points + pointsPerSecond); //increase points by points per second
+      setSeconds(seconds + 1); //add 1 second
     }, 1000);
     return () => {
       clearInterval(interval); //clear interval when component unmounts
@@ -29,7 +31,7 @@ function App() {
   function addPointsFromClick() {
     //add points from clicking a button
     setPoints(points + clickMultiplier); //increase points by 1 when button clicked
-    setClicks(clicks + clickMultiplier); //increase clicks made by 1
+    setClicks(clicks + 1); //increase clicks made by 1
   }
   function upgradeClicker() {
     //upgrade clicker (points per click)
