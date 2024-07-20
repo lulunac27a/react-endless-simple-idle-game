@@ -1,3 +1,4 @@
+import CostDisplay from './components/CostDisplay/CostDisplay';
 import './App.css';
 import { useState, useEffect } from 'react';
 function App() {
@@ -15,6 +16,16 @@ function App() {
       clearInterval(interval); //clear interval when component unmounts
     };
   }, [points, pointsPerSecond]);
+  function checkPointsForUpgrade(points, pointsRequired) {
+    //check if user has enough points to upgrade
+    if (pointsRequired !== 0 && points >= pointsRequired) {
+      //make sure points required is not 0 and user has enough points to upgrade
+      return true;
+    } else {
+      //not enough points required to upgrade
+      return false;
+    }
+  }
   function addPointsFromClick() {
     //add points from clicking a button
     setPoints(points + clickMultiplier); //increase points by 1 when button clicked
@@ -22,14 +33,14 @@ function App() {
   }
   function upgradeClicker() {
     //upgrade clicker (points per click)
-    if (points >= 10 * Math.pow(2, clickMultiplier - 1)) {
+    if (checkPointsForUpgrade(points, 10 * Math.pow(2, clickMultiplier - 1))) {
       setPoints(points - 10 * Math.pow(2, clickMultiplier - 1)); //spend points
       setClickMultiplier(clickMultiplier + 1); //increase click multiplier by 1
     }
   }
   function upgradePointsPerSecond() {
     //upgrade points per second
-    if (points >= 10 * Math.pow(2, pointsPerSecond)) {
+    if (checkPointsForUpgrade(points, 10 * Math.pow(2, pointsPerSecond))) {
       setPoints(points - 10 * Math.pow(2, pointsPerSecond));
       setPointsPerSecond(pointsPerSecond + 1); //increase points per second
     }
@@ -53,13 +64,13 @@ function App() {
       <button onClick={() => upgradeClicker()}>
         Upgrade Clicker (Points Per Click)
         <br />
-        Cost: {10 * Math.pow(2, clickMultiplier - 1)}
+        <CostDisplay cost={10 * Math.pow(2, clickMultiplier - 1)} />
       </button>
       {/*upgrade points per second*/}
       <button onClick={() => upgradePointsPerSecond()}>
         Upgrade Points Per Second
         <br />
-        Cost: {10 * Math.pow(2, pointsPerSecond)}
+        <CostDisplay cost={10 * Math.pow(2, pointsPerSecond)} />
       </button>
     </div>
   );
