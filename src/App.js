@@ -1,4 +1,5 @@
 import CostDisplay from './components/CostDisplay/CostDisplay';
+import NumericDisplay from './components/NumericDisplay/NumericDisplay';
 import './App.css';
 import { useState, useEffect } from 'react';
 function App() {
@@ -70,7 +71,10 @@ function App() {
       <p>Click the button to add points!</p>
       {/*display current points value*/}
       <p>
-        Points: <div id="points-display">{points}</div>
+        Points:{" "}
+        <div id="points-display">
+          <NumericDisplay value={points} />
+        </div>
       </p>
       {/*increase points from clicking a button*/}
       <button onClick={() => addPointsFromClick()}>Click to Add Points</button>
