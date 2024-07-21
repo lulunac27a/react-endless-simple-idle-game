@@ -2,13 +2,17 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import styles from './NumericDisplay.module.css';
 
-const NumericDisplay = ({ value }) => (
+const NumericDisplay = (
+  { value }, //display numeric values
+) => (
   <div className={styles.NumericDisplay} data-testid="NumericDisplay">
+    {/*display numeric values with styles*/}
     {value}
+    {/*bold the numeric value*/}
   </div>
 );
 
-NumericDisplay.propTypes = {};
+NumericDisplay.propTypes = { value: PropTypes.number.isRequired };
 
 NumericDisplay.defaultProps = {};
 
