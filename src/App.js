@@ -19,7 +19,7 @@ function App() {
     return () => {
       clearInterval(interval); //clear interval when component unmounts
     };
-  }, [points, pointsPerSecond]);
+  }, [points, pointsPerSecond, seconds]);
   function checkPointsForUpgrade(points, pointsRequired) {
     //check if user has enough points to upgrade
     if (pointsRequired !== 0 && points >= pointsRequired) {
