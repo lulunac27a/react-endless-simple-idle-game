@@ -6,7 +6,7 @@ const NumericDisplay = (
   { value }, //display numeric values
 ) => (
   <div className={styles.NumericDisplay} data-testid="NumericDisplay">
-    {/*display numeric values with styles*/}
+    {/*display numeric values with specified styles*/}
     {value}
     {/*bold the numeric value*/}
   </div>
