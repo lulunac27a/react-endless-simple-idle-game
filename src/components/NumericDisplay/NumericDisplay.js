@@ -20,7 +20,7 @@ function formatNumber(number, shortForm = true) {
       ); //return coefficient of engineering notation with numeric prefix
     }
   } else {
-    return number.toString();
+    return Math.round(number).toString(); //return number rounded to nearest integer
   }
 }
 const NumericDisplay = (
