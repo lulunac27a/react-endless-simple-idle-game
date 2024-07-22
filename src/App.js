@@ -16,6 +16,8 @@ function App() {
       //increase points every second
       setPoints(points + pointsPerSecond); //increase points by points per second
       setSeconds(seconds + 1); //add 1 second
+      updateClickers(); //update clickers value
+      updateAutoClickers(); //update auto clickers value
     }, 1000);
     return () => {
       clearInterval(interval); //clear interval when component unmounts
@@ -41,7 +43,6 @@ function App() {
   }
   function addPointsFromClick() {
     //add points from clicking a button
-    updateClickers(); //update clickers value
     setPoints(points + clickMultiplier); //increase points by 1 when button clicked
     setClicks(clicks + 1); //increase clicks made by 1
   }
