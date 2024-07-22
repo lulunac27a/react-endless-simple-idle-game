@@ -41,6 +41,7 @@ function App() {
   }
   function addPointsFromClick() {
     //add points from clicking a button
+    updateClickers(); //update clickers value
     setPoints(points + clickMultiplier); //increase points by 1 when button clicked
     setClicks(clicks + 1); //increase clicks made by 1
   }
@@ -49,15 +50,15 @@ function App() {
     if (checkPointsForUpgrade(points, 10 * Math.pow(2, clickers - 1))) {
       setPoints(points - 10 * Math.pow(2, clickers - 1)); //spend points
       setClickers(clickers + 1); //increase clickers by 1
-      updateClickers();
+      updateClickers(); //update clickers value
     }
   }
   function upgradePointsPerSecond() {
     //upgrade points per second
-    if (checkPointsForUpgrade(points, 10 * Math.pow(2, pointsPerSecond))) {
-      setPoints(points - 10 * Math.pow(2, pointsPerSecond));
+    if (checkPointsForUpgrade(points, 10 * Math.pow(2, autoClickers))) {
+      setPoints(points - 10 * Math.pow(2, autoClickers));
       setAutoClickers(autoClickers + 1); //increase autoclickers by 1
-      updateAutoClickers();
+      updateAutoClickers(); //update auto clickers value
     }
   }
   return (
