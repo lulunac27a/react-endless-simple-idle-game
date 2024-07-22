@@ -1,7 +1,7 @@
 import CostDisplay from './components/CostDisplay/CostDisplay';
 import NumericDisplay from './components/NumericDisplay/NumericDisplay';
 import './App.css';
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 function App() {
   //app component
   const [points, setPoints] = useState(0); //set initial points to 0
@@ -11,6 +11,14 @@ function App() {
   const [clickMultiplier, setClickMultiplier] = useState(1);
   const [clickers, setClickers] = useState(1); //set clickers to 1
   const [seconds, setSeconds] = useState(0); //set initial seconds played to 0
+  const updateClickers = useCallback(() => {
+    //update click multiplier for clickers
+    setClickMultiplier(clickers); //set click multiplier
+  }, [clickers]);
+  const updateAutoClickers = useCallback(() => {
+    //update points per second for autoclickers
+    setPointsPerSecond(autoClickers); //set points per second
+  }, [autoClickers]);
   useEffect(() => {
     const interval = setInterval(() => {
       //increase points every second
@@ -23,6 +31,7 @@ function App() {
       clearInterval(interval); //clear interval when component unmounts
     };
   }, [points, pointsPerSecond, seconds, updateAutoClickers, updateClickers]);
+
   function checkPointsForUpgrade(points, pointsRequired) {
     //check if user has enough points to upgrade
     if (pointsRequired !== 0 && points >= pointsRequired) {
@@ -33,14 +42,7 @@ function App() {
       return false;
     }
   }
-  function updateClickers() {
-    //update click multiplier for clickers
-    setClickMultiplier(clickers); //set click multiplier
-  }
-  function updateAutoClickers() {
-    //update points per second for autoclickers
-    setPointsPerSecond(autoClickers); //set points per second
-  }
+
   function addPointsFromClick() {
     //add points from clicking a button
     setPoints(points + clickMultiplier); //increase points by 1 when button clicked
