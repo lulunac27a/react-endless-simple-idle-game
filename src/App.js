@@ -13,24 +13,24 @@ function App() {
   const [seconds, setSeconds] = useState(0); //set initial seconds played to 0
   const updateClickers = useCallback(() => {
     //update click multiplier for clickers
-    setClickMultiplier(clickers); //set click multiplier
+    setClickMultiplier((prevMultiplier) => clickers); //set click multiplier
   }, [clickers]);
   const updateAutoClickers = useCallback(() => {
     //update points per second for autoclickers
-    setPointsPerSecond(autoClickers); //set points per second
+    setPointsPerSecond((prevPointsPerSecond) => autoClickers); //set points per second
   }, [autoClickers]);
   useEffect(() => {
     const interval = setInterval(() => {
       //increase points every second
-      setPoints(points + pointsPerSecond); //increase points by points per second
-      setSeconds(seconds + 1); //add 1 second
+      setPoints((prevPoints) => prevPoints + pointsPerSecond); //increase points by points per second
+      setSeconds((prevSeconds) => prevSeconds + 1); //add 1 second
       updateClickers(); //update clickers value
       updateAutoClickers(); //update auto clickers value
     }, 1000);
     return () => {
       clearInterval(interval); //clear interval when component unmounts
     };
-  }, [points, pointsPerSecond, seconds, updateAutoClickers, updateClickers]);
+  }, [pointsPerSecond, updateAutoClickers, updateClickers]);
 
   function checkPointsForUpgrade(points, pointsRequired) {
     //check if user has enough points to upgrade
@@ -45,22 +45,22 @@ function App() {
 
   function addPointsFromClick() {
     //add points from clicking a button
-    setPoints(points + clickMultiplier); //increase points by 1 when button clicked
-    setClicks(clicks + 1); //increase clicks made by 1
+    setPoints((prevPoints) => prevPoints + clickMultiplier); //increase points by 1 when button clicked
+    setClicks((prevClicks) => prevClicks + 1); //increase clicks made by 1
   }
   function upgradeClicker() {
     //upgrade clicker (points per click)
     if (checkPointsForUpgrade(points, 10 * Math.pow(2, clickers - 1))) {
-      setPoints(points - 10 * Math.pow(2, clickers - 1)); //spend points
-      setClickers(clickers + 1); //increase clickers by 1
+      setPoints((prevPoints) => prevPoints - 10 * Math.pow(2, clickers - 1)); //spend points
+      setClickers((prevClickers) => prevClickers + 1); //increase clickers by 1
       updateClickers(); //update clickers value
     }
   }
   function upgradePointsPerSecond() {
     //upgrade points per second
     if (checkPointsForUpgrade(points, 10 * Math.pow(2, autoClickers))) {
-      setPoints(points - 10 * Math.pow(2, autoClickers));
-      setAutoClickers(autoClickers + 1); //increase autoclickers by 1
+      setPoints((prevPoints) => prevPoints - 10 * Math.pow(2, autoClickers));
+      setAutoClickers((prevAutoClickers) => prevAutoClickers + 1); //increase autoclickers by 1
       updateAutoClickers(); //update auto clickers value
     }
   }
