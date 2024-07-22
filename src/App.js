@@ -80,6 +80,20 @@ function App() {
           <NumericDisplay value={points} />
         </span>
       </p>
+      {/*display points per click value*/}
+      <p>
+        Points per click:{" "}
+        <span id="points-display">
+          <NumericDisplay value={clickMultiplier} />
+        </span>
+      </p>
+      {/*display points per second value*/}
+      <p>
+        Points per second:{" "}
+        <span id="points-display">
+          <NumericDisplay value={pointsPerSecond} />
+        </span>
+      </p>
       {/*increase points from clicking a button*/}
       <button onClick={() => addPointsFromClick()}>Click to Add Points</button>
       <br />
