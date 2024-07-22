@@ -72,18 +72,22 @@ function App() {
       {/*display current points value*/}
       <p>
         Points:{" "}
-        <div id="points-display">
+        <span id="points-display">
           <NumericDisplay value={points} />
-        </div>
+        </span>
       </p>
       {/*increase points from clicking a button*/}
       <button onClick={() => addPointsFromClick()}>Click to Add Points</button>
+      <br />
+      Clicker Level: {clickers}
       <br />
       {/*upgrade clicker (points per click)*/}
       <button onClick={() => upgradeClicker()}>
         Upgrade Clicker (Points Per Click)
       </button>
       <CostDisplay cost={10 * Math.pow(2, clickers - 1)} />
+      Autoclicker Level: {autoClickers}
+      <br />
       {/*upgrade points per second*/}
       <button onClick={() => upgradePointsPerSecond()}>
         Upgrade Points Per Second
