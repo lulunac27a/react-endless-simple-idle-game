@@ -2,28 +2,34 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import styles from './NumericDisplay.module.css';
 
-function formatNumber(number) {
+function formatNumber(number, shortForm = true) {
   //format number to short form with numeric prefixes
-  const exponent = Math.floor(Math.log10(number));
-  const exponent3 = Math.floor(exponent / 3) * 3;
-  const prefixes = ['', 'K', 'M', 'B', 'T'];
-  if (number < 1000) {
-    return number.toString();
+  if (shortForm) {
+    //if short form is true
+    const exponent = Math.floor(Math.log10(Math.abs(Math.max(number, 1)))); //exponent component of number
+    const exponent3 = Math.floor(exponent / 3) * 3; //exponent with multiple of 3 for engineering notation
+    const prefixes = ["", "K", "M", "B", "T"]; //numeric prefixes
+    if (Math.abs(number < 1000)) {
+      //if number is less than 1 thousand
+      return Math.round(number).toString(); //return number rounded to nearest integer
+    } else {
+      const roundedNumber = number.toPrecision(3); //round number to 3 significant figures
+      return (
+        (parseFloat(roundedNumber) / Math.pow(10, exponent3)).toPrecision(3) +
+        prefixes[exponent3 / 3]
+      ); //return coefficient of engineering notation with numeric prefix
+    }
   } else {
-    const roundedNumber = number.toPrecision(3);
-    return (
-      (parseFloat(roundedNumber) / Math.pow(10, exponent3)).toPrecision(3) +
-      prefixes[exponent3 / 3]
-    );
+    return number.toString();
   }
 }
 const NumericDisplay = (
-  { value }, //display numeric values
+  { value, shortForm }, //display numeric values
 ) => (
   <span className={styles.NumericDisplay} data-testid="NumericDisplay">
     {/*display numeric values with specified styles*/}
-    {formatNumber(value)}
-    {/*bold the numeric value with short exponential form (engineering notation)*/}
+    {formatNumber(value, shortForm)}
+    {/*bold the numeric value display with short exponential form (engineering notation) if short form is true*/}
   </span>
 );
 
