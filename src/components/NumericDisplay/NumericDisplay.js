@@ -8,7 +8,20 @@ function formatNumber(number, shortForm = true) {
     //if short form is true
     const exponent = Math.floor(Math.log10(Math.abs(Math.max(number, 1)))); //exponent component of number
     const exponent3 = Math.floor(exponent / 3) * 3; //exponent with multiple of 3 for engineering notation
-    const prefixes = ["", "K", "M", "B", "T"]; //numeric prefixes
+    const prefixes = [
+      '',
+      'K',
+      'M',
+      'B',
+      'T',
+      'Qa',
+      'Qi',
+      'Sx',
+      'Sp',
+      'O',
+      'N',
+      'D',
+    ]; //numeric prefixes
     if (Math.abs(number) < 1000) {
       //if number is less than 1 thousand
       return Math.round(number).toString(); //return number rounded to nearest integer
