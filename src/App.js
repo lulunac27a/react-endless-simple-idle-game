@@ -140,14 +140,6 @@ function App() {
         Upgrade Clicker (Points Per Click)
       </button>
       <CostDisplay cost={10 * Math.pow(2, clickers - 1)} />
-      Autoclicker Level:{" "}
-      <NumericDisplay value={autoClickers} shortForm={false} />
-      <br />
-      {/*upgrade points per second*/}
-      <button onClick={() => upgradeAutoClicker()}>
-        Upgrade Points Per Second
-      </button>
-      <CostDisplay cost={10 * Math.pow(2, autoClickers)} />
       Clicker Multiplier Level:{" "}
       <NumericDisplay value={clickersMultiplier} shortForm={false} />
       <br />
@@ -156,6 +148,14 @@ function App() {
         Upgrade Clicker (Points Per Click)
       </button>
       <CostDisplay cost={100 * Math.pow(2, clickersMultiplier - 1)} />
+      Autoclicker Level:{" "}
+      <NumericDisplay value={autoClickers} shortForm={false} />
+      <br />
+      {/*upgrade points per second*/}
+      <button onClick={() => upgradeAutoClicker()}>
+        Upgrade Points Per Second
+      </button>
+      <CostDisplay cost={10 * Math.pow(2, autoClickers)} />
       Autoclicker Multiplier Level:{" "}
       <NumericDisplay value={autoClickersMultiplier} shortForm={false} />
       <br />
