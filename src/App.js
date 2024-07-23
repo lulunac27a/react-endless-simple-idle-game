@@ -5,20 +5,24 @@ import { useState, useEffect, useCallback } from 'react';
 function App() {
   //app component
   const [points, setPoints] = useState(0); //set initial points to 0
-  const [pointsPerSecond, setPointsPerSecond] = useState(0);
-  const [autoClickers, setAutoClickers] = useState(0); //set auto clickers to 0
+  const [pointsPerSecond, setPointsPerSecond] = useState(0); //set initial points per second to 0
+  const [autoClickers, setAutoClickers] = useState(0); //set initial auto clickers to 0
+  const [autoClickersMultiplier, setAutoClickersMultiplier] = useState(1); //set initial auto clickers multiplier to 1
   const [clicks, setClicks] = useState(0); //set initial clicks pressed to 0
-  const [clickMultiplier, setClickMultiplier] = useState(1);
-  const [clickers, setClickers] = useState(1); //set clickers to 1
+  const [clickMultiplier, setClickMultiplier] = useState(1); //set initial click multiplier to 1
+  const [clickersMultiplier, setClickersMultiplier] = useState(1); //set initial clickers multiplier to 1
+  const [clickers, setClickers] = useState(1); //set initial clickers to 1
   const [seconds, setSeconds] = useState(0); //set initial seconds played to 0
   const updateClickers = useCallback(() => {
     //update click multiplier for clickers
-    setClickMultiplier((prevMultiplier) => clickers); //set click multiplier
-  }, [clickers]);
+    setClickMultiplier((prevMultiplier) => clickers * clickersMultiplier); //set click multiplier
+  }, [clickersMultiplier, clickers]);
   const updateAutoClickers = useCallback(() => {
     //update points per second for autoclickers
-    setPointsPerSecond((prevPointsPerSecond) => autoClickers); //set points per second
-  }, [autoClickers]);
+    setPointsPerSecond(
+      (prevPointsPerSecond) => autoClickers * autoClickersMultiplier,
+    ); //set points per second
+  }, [autoClickers, autoClickersMultiplier]);
   useEffect(() => {
     const interval = setInterval(() => {
       //increase points every second
@@ -56,11 +60,43 @@ function App() {
       updateClickers(); //update clickers value
     }
   }
-  function upgradePointsPerSecond() {
-    //upgrade points per second
+  function upgradeClickerMultiplier() {
+    //upgrade clicker multiplier (points per click)
+    if (
+      checkPointsForUpgrade(points, 100 * Math.pow(2, clickersMultiplier - 1))
+    ) {
+      setPoints(
+        (prevPoints) => prevPoints - 100 * Math.pow(2, clickersMultiplier - 1),
+      ); //spend points
+      setClickersMultiplier(
+        (prevClickersMultiplier) => prevClickersMultiplier + 1,
+      ); //increase clickers multiplier by 1
+      updateClickers(); //update clickers value
+    }
+  }
+  function upgradeAutoClicker() {
+    //upgrade autoclicker
     if (checkPointsForUpgrade(points, 10 * Math.pow(2, autoClickers))) {
       setPoints((prevPoints) => prevPoints - 10 * Math.pow(2, autoClickers));
       setAutoClickers((prevAutoClickers) => prevAutoClickers + 1); //increase autoclickers by 1
+      updateAutoClickers(); //update auto clickers value
+    }
+  }
+  function upgradeAutoClickerMultiplier() {
+    //upgrade autoclicker multiplier
+    if (
+      checkPointsForUpgrade(
+        points,
+        100 * Math.pow(2, autoClickersMultiplier - 1),
+      )
+    ) {
+      setPoints(
+        (prevPoints) =>
+          prevPoints - 100 * Math.pow(2, autoClickersMultiplier - 1),
+      );
+      setAutoClickersMultiplier(
+        (prevAutoClickersMultiplier) => prevAutoClickersMultiplier + 1,
+      ); //increase autoclickers multiplier by 1
       updateAutoClickers(); //update auto clickers value
     }
   }
@@ -108,10 +144,26 @@ function App() {
       <NumericDisplay value={autoClickers} shortForm={false} />
       <br />
       {/*upgrade points per second*/}
-      <button onClick={() => upgradePointsPerSecond()}>
+      <button onClick={() => upgradeAutoClicker()}>
         Upgrade Points Per Second
       </button>
       <CostDisplay cost={10 * Math.pow(2, autoClickers)} />
+      Clicker Multiplier Level:{" "}
+      <NumericDisplay value={clickersMultiplier} shortForm={false} />
+      <br />
+      {/*upgrade clicker (points per click)*/}
+      <button onClick={() => upgradeClickerMultiplier()}>
+        Upgrade Clicker (Points Per Click)
+      </button>
+      <CostDisplay cost={100 * Math.pow(2, clickersMultiplier - 1)} />
+      Autoclicker Multiplier Level:{" "}
+      <NumericDisplay value={autoClickersMultiplier} shortForm={false} />
+      <br />
+      {/*upgrade points per second*/}
+      <button onClick={() => upgradeAutoClickerMultiplier()}>
+        Upgrade Points Per Second
+      </button>
+      <CostDisplay cost={100 * Math.pow(2, autoClickersMultiplier - 1)} />
     </div>
   );
 }
