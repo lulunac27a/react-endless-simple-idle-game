@@ -46,7 +46,10 @@ const NumericDisplay = (
   </span>
 );
 
-NumericDisplay.propTypes = { value: PropTypes.number.isRequired };
+NumericDisplay.propTypes = {
+  value: PropTypes.number.isRequired,
+  shortForm: PropTypes.bool.isRequired,
+};
 
 NumericDisplay.defaultProps = {};
 
