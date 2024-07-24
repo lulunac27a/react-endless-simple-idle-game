@@ -1,7 +1,7 @@
-import CostDisplay from './components/CostDisplay/CostDisplay';
-import NumericDisplay from './components/NumericDisplay/NumericDisplay';
-import './App.css';
-import { useState, useEffect, useCallback } from 'react';
+import CostDisplay from "./components/CostDisplay/CostDisplay";
+import NumericDisplay from "./components/NumericDisplay/NumericDisplay";
+import "./App.css";
+import { useState, useEffect, useCallback } from "react";
 function App() {
   //app component
   const [points, setPoints] = useState(0); //set initial points to 0
@@ -154,9 +154,7 @@ function App() {
       Clicker Level: <NumericDisplay value={clickers} shortForm={false} />
       <br />
       {/*upgrade clicker (points per click)*/}
-      <button onClick={() => upgradeClicker()}>
-        Upgrade Clicker (Points Per Click)
-      </button>
+      <button onClick={() => upgradeClicker()}>Upgrade Clicker</button>
       <CostDisplay cost={10 * Math.pow(2, clickers - 1)} />
       Clicker Multiplier Level:{" "}
       <NumericDisplay value={clickersMultiplier} shortForm={false} />
