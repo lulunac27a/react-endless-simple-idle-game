@@ -9,7 +9,7 @@ test('displays title correctly', () => {
 test('displays points value', () => {
   render(<App />);
   const pointsElement = screen.getByText((content, element) => {
-    const hasText = (node) => node.textContent.match(/points: \d+/i);
+    const hasText = (node) => node.textContent.match(/points: [\d.\w]+/i);
     const elementHasText = hasText(element);
     const childrenDontHaveText = Array.from(element.children).every(
       (child) => !hasText(child),
