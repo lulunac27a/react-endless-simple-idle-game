@@ -9,6 +9,7 @@ function App() {
   const [autoClickers, setAutoClickers] = useState(0); //set initial auto clickers to 0
   const [autoClickersMultiplier, setAutoClickersMultiplier] = useState(1); //set initial auto clickers multiplier to 1
   const [autoClickersLevelBonus, setAutoClickersLevelBonus] = useState(0); //set initial auto clickers level bonus to 0
+  const [autoClickersBonus, setAutoClickersBonus] = useState(0); //set initial auto clickers bonus to 0
   const [clicks, setClicks] = useState(0); //set initial clicks pressed to 0
   const [clickMultiplier, setClickMultiplier] = useState(1); //set initial click multiplier to 1
   const [clickersMultiplier, setClickersMultiplier] = useState(1); //set initial clickers multiplier to 1
@@ -24,9 +25,21 @@ function App() {
       (prevPointsPerSecond) =>
         autoClickers *
         autoClickersMultiplier *
-        (1 + (autoClickersLevelBonus * autoClickers) / 100),
+        (1 + (autoClickersLevelBonus * autoClickers) / 100) *
+        (1 +
+          (autoClickersBonus *
+            (autoClickers +
+              autoClickersMultiplier +
+              autoClickersLevelBonus +
+              autoClickersBonus)) /
+          100),
     ); //set points per second
-  }, [autoClickers, autoClickersLevelBonus, autoClickersMultiplier]);
+  }, [
+    autoClickers,
+    autoClickersBonus,
+    autoClickersLevelBonus,
+    autoClickersMultiplier,
+  ]);
   useEffect(() => {
     const interval = setInterval(() => {
       //increase points every second
@@ -118,6 +131,18 @@ function App() {
       updateAutoClickers(); //update auto clickers value
     }
   }
+  function upgradeAutoClickerBonus() {
+    //upgrade autoclicker bonus based on number of upgrades bought
+    if (checkPointsForUpgrade(points, 1e4 * Math.pow(3, autoClickersBonus))) {
+      setPoints(
+        (prevPoints) => prevPoints - 1e4 * Math.pow(3, autoClickersBonus),
+      );
+      setAutoClickersBonus(
+        (prevAutoClickersBonus) => prevAutoClickersBonus + 1,
+      ); //increase autoclickers bonus by 1
+      updateAutoClickers(); //update auto clickers value
+    }
+  }
   return (
     //dynamic app HTML output
     <div className="App">
@@ -185,7 +210,15 @@ function App() {
       <button onClick={() => upgradeAutoClickerLevelBonus()}>
         Upgrade Autoclicker Level Bonus
       </button>
-      <CostDisplay cost={1000 * Math.pow(2, autoClickersLevelBonus)} />
+      <CostDisplay cost={1e3 * Math.pow(2, autoClickersLevelBonus)} />
+      Autoclicker Bonus:{" "}
+      <NumericDisplay value={autoClickersBonus} shortForm={false} />
+      <br />
+      {/*upgrade autoclicker level bonus*/}
+      <button onClick={() => upgradeAutoClickerBonus()}>
+        Upgrade Autoclicker Bonus
+      </button>
+      <CostDisplay cost={1e4 * Math.pow(3, autoClickersBonus)} />
     </div>
   );
 }
