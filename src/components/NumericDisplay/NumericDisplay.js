@@ -26,6 +26,7 @@ function formatNumber(number = 0, shortForm = true) {
       //if number is less than 1 thousand
       return Math.round(number).toString(); //return number rounded to nearest integer
     } else {
+      //if number is 1 thousand or more
       const roundedNumber = number.toPrecision(3); //round number to 3 significant figures
       return (
         (parseFloat(roundedNumber) / Math.pow(10, exponent3)).toPrecision(3) +
@@ -33,6 +34,7 @@ function formatNumber(number = 0, shortForm = true) {
       ); //return coefficient of engineering notation with numeric prefix
     }
   } else {
+    //if short form is false
     return Math.round(number).toString(); //return number rounded to nearest integer
   }
 }
