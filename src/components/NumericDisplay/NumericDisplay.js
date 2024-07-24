@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import styles from './NumericDisplay.module.css';
 
-function formatNumber(number, shortForm = true) {
+function formatNumber(number = 0, shortForm = true) {
   //format number to short form with numeric prefixes
   if (shortForm) {
     //if short form is true

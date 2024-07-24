@@ -7,8 +7,8 @@ describe('<NumericDisplay />', () => {
   test('it should mount', () => {
     render(<NumericDisplay />);
 
-    const NumericDisplay = screen.getByTestId('NumericDisplay');
+    const numericDisplay = screen.getByTestId('NumericDisplay');
 
-    expect(NumericDisplay).toBeInTheDocument();
+    expect(numericDisplay).toBeInTheDocument();
   });
 });

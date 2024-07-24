@@ -7,8 +7,8 @@ describe('<CostDisplay />', () => {
   test('it should mount', () => {
     render(<CostDisplay />);
 
-    const CostDisplay = screen.getByTestId('CostDisplay');
+    const costDisplay = screen.getByTestId('CostDisplay');
 
-    expect(CostDisplay).toBeInTheDocument();
+    expect(costDisplay).toBeInTheDocument();
   });
 });
