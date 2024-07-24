@@ -1,7 +1,7 @@
-import CostDisplay from "./components/CostDisplay/CostDisplay";
-import NumericDisplay from "./components/NumericDisplay/NumericDisplay";
-import "./App.css";
-import { useState, useEffect, useCallback } from "react";
+import CostDisplay from './components/CostDisplay/CostDisplay';
+import NumericDisplay from './components/NumericDisplay/NumericDisplay';
+import './App.css';
+import { useState, useEffect, useCallback } from 'react';
 function App() {
   //app component
   const [points, setPoints] = useState(0); //set initial points to 0
