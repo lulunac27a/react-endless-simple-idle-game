@@ -1,14 +1,29 @@
 body {
   /*body styles*/
   margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen",
-    "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue",
-    sans-serif;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+    sans-serif; /*default computer system font*/
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
 code {
-  font-family: "Source Code Pro", Menlo, Monaco, Consolas, "Courier New",
+  font-family: 'Source Code Pro', Menlo, Monaco, Consolas, 'Courier New',
     monospace; /*set font for code block to monospaced font*/
+}
+
+table,
+th,
+td {
+  /*table styles*/
+  border: 1px solid black; /*add borders for table cells including headers*/
+  border-collapse: collapse; /*collapse borders to prevent double borders*/
+  table-layout: fixed;
+}
+
+th,
+td {
+  /*styles for table header and table body*/
+  width: 20vw; /*set column width to 20% of viewpoint weight*/
 }
