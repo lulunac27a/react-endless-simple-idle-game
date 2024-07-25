@@ -255,80 +255,150 @@ function App() {
       {/*increase points from clicking a button*/}
       <button onClick={() => addPointsFromClick()}>Click to Add Points</button>
       <br />
-      Clicker Level: <NumericDisplay value={clickers} shortForm={false} />
-      <br />
-      {/*upgrade clicker (points per click)*/}
-      <button onClick={() => upgradeClicker()}>Upgrade Clicker</button>
-      <CostDisplay cost={10 * Math.pow(2, clickers - 1)} />
-      Clicker Multiplier Level:{" "}
-      <NumericDisplay value={clickersMultiplier} shortForm={false} />
-      <br />
-      {/*upgrade clicker multiplier*/}
-      <button onClick={() => upgradeClickerMultiplier()}>
-        Upgrade Clicker Multiplier
-      </button>
-      <CostDisplay cost={100 * Math.pow(2, clickersMultiplier - 1)} />
-      Time Multiplier Bonus:{" "}
-      <NumericDisplay value={timeMultiplierBonus} shortForm={false} />
-      <br />
-      {/*upgrade time multiplier bonus*/}
-      <button onClick={() => upgradeTimeMultiplierBonus()}>
-        Upgrade Time Multiplier Bonus
-      </button>
-      <CostDisplay cost={2.5e3 * Math.pow(10, timeMultiplierBonus)} />
-      Click Multiplier Bonus:{" "}
-      <NumericDisplay value={clickMultiplierBonus} shortForm={false} />
-      <br />
-      {/*upgrade click multiplier bonus*/}
-      <button onClick={() => upgradeClickMultiplierBonus()}>
-        Upgrade Click Multiplier Bonus
-      </button>
-      <CostDisplay cost={5e3 * Math.pow(10, clickMultiplierBonus)} />
-      Clicker Bonus: <NumericDisplay value={clickerBonus} shortForm={false} />
-      <br />
-      {/*upgrade clicker bonus*/}
-      <button onClick={() => upgradeClickerBonus()}>
-        Upgrade Clicker Bonus
-      </button>
-      <CostDisplay cost={1e3 * Math.pow(10, clickerBonus)} />
-      Autoclicker Level:{" "}
-      <NumericDisplay value={autoClickers} shortForm={false} />
-      <br />
-      {/*upgrade autoclicker (points per second)*/}
-      <button onClick={() => upgradeAutoClicker()}>Upgrade Autoclicker</button>
-      <CostDisplay cost={10 * Math.pow(2, autoClickers)} />
-      Autoclicker Multiplier Level:{" "}
-      <NumericDisplay value={autoClickersMultiplier} shortForm={false} />
-      <br />
-      {/*upgrade autoclicker multiplier*/}
-      <button onClick={() => upgradeAutoClickerMultiplier()}>
-        Upgrade Autoclicker Multiplier
-      </button>
-      <CostDisplay cost={100 * Math.pow(2, autoClickersMultiplier - 1)} />
-      Autoclicker Level Bonus:{" "}
-      <NumericDisplay value={autoClickersLevelBonus} shortForm={false} />
-      <br />
-      {/*upgrade autoclicker level bonus*/}
-      <button onClick={() => upgradeAutoClickerLevelBonus()}>
-        Upgrade Autoclicker Level Bonus
-      </button>
-      <CostDisplay cost={1e3 * Math.pow(2, autoClickersLevelBonus)} />
-      Autoclicker Bonus:{" "}
-      <NumericDisplay value={autoClickersBonus} shortForm={false} />
-      <br />
-      {/*upgrade autoclicker bonus*/}
-      <button onClick={() => upgradeAutoClickerBonus()}>
-        Upgrade Autoclicker Bonus
-      </button>
-      <CostDisplay cost={1e4 * Math.pow(3, autoClickersBonus)} />
-      Autoclicker Bonus Multiplier:{" "}
-      <NumericDisplay value={autoClickersBonus} shortForm={false} />
-      <br />
-      {/*upgrade autoclicker bonus multiplier*/}
-      <button onClick={() => upgradeAutoClickerBonusMultiplier()}>
-        Upgrade Autoclicker Bonus Multiplier
-      </button>
-      <CostDisplay cost={1e5 * Math.pow(5, autoClickersBonusMultiplier)} />
+      <tr>
+        <td>
+          Time Multiplier Bonus:{" "}
+          <NumericDisplay value={timeMultiplierBonus} shortForm={false} />
+          <br />
+          {/*upgrade time multiplier bonus*/}
+          <button onClick={() => upgradeTimeMultiplierBonus()}>
+            Upgrade Time Multiplier Bonus
+          </button>
+          <CostDisplay cost={2.5e3 * Math.pow(10, timeMultiplierBonus)} />
+        </td>
+      </tr>
+      <tr>
+        <td>
+          Click Multiplier Bonus:{" "}
+          <NumericDisplay value={clickMultiplierBonus} shortForm={false} />
+          <br />
+          {/*upgrade click multiplier bonus*/}
+          <button onClick={() => upgradeClickMultiplierBonus()}>
+            Upgrade Click Multiplier Bonus
+          </button>
+          <CostDisplay cost={5e3 * Math.pow(10, clickMultiplierBonus)} />
+        </td>
+      </tr>
+      <tr>
+        <td>
+          Clicker Bonus:{" "}
+          <NumericDisplay value={clickerBonus} shortForm={false} />
+          <br />
+          {/*upgrade clicker bonus*/}
+          <button onClick={() => upgradeClickerBonus()}>
+            Upgrade Clicker Bonus
+          </button>
+          <CostDisplay cost={1e3 * Math.pow(10, clickerBonus)} />
+        </td>
+      </tr>
+
+      <table>
+        <thead>
+          <tr>
+            <th>
+              Item (1% bonus per autoclicker upgrade per bonus multiplier
+              upgrade)
+            </th>
+            <th>
+              Multiplier (2% bonus per multiplier upgrade per bonus multiplier
+              upgrade)
+            </th>
+            <th>
+              Level Bonus (1% bonus per autoclicker level, 3% bonus per level
+              bonus upgrade per bonus multiplier upgrade)
+            </th>
+            <th>
+              Bonus (1% bonus per upgrade, 4% bonus per bonus upgrade per bonus
+              multiplier upgrade)
+            </th>
+            <th>Bonus Multiplier (5% bonus per bonus multiplier upgrade)</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>
+              Clicker Level:{" "}
+              <NumericDisplay value={clickers} shortForm={false} />
+              <br />
+              {/*upgrade clicker (points per click)*/}
+              <button onClick={() => upgradeClicker()}>Upgrade Clicker</button>
+              <CostDisplay cost={10 * Math.pow(2, clickers - 1)} />
+            </td>
+            <td>
+              Clicker Multiplier Level:{" "}
+              <NumericDisplay value={clickersMultiplier} shortForm={false} />
+              <br />
+              {/*upgrade clicker multiplier*/}
+              <button onClick={() => upgradeClickerMultiplier()}>
+                Upgrade Clicker Multiplier
+              </button>
+              <CostDisplay cost={100 * Math.pow(2, clickersMultiplier - 1)} />
+            </td>
+          </tr>
+          <tr>
+            <td>
+              Autoclicker Level:{" "}
+              <NumericDisplay value={autoClickers} shortForm={false} />
+              <br />
+              {/*upgrade autoclicker (points per second)*/}
+              <button onClick={() => upgradeAutoClicker()}>
+                Upgrade Autoclicker
+              </button>
+              <CostDisplay cost={10 * Math.pow(2, autoClickers)} />
+            </td>
+            <td>
+              Autoclicker Multiplier Level:{" "}
+              <NumericDisplay
+                value={autoClickersMultiplier}
+                shortForm={false}
+              />
+              <br />
+              {/*upgrade autoclicker multiplier*/}
+              <button onClick={() => upgradeAutoClickerMultiplier()}>
+                Upgrade Autoclicker Multiplier
+              </button>
+              <CostDisplay
+                cost={100 * Math.pow(2, autoClickersMultiplier - 1)}
+              />
+            </td>
+            <td>
+              Autoclicker Level Bonus:{" "}
+              <NumericDisplay
+                value={autoClickersLevelBonus}
+                shortForm={false}
+              />
+              <br />
+              {/*upgrade autoclicker level bonus*/}
+              <button onClick={() => upgradeAutoClickerLevelBonus()}>
+                Upgrade Autoclicker Level Bonus
+              </button>
+              <CostDisplay cost={1e3 * Math.pow(2, autoClickersLevelBonus)} />
+            </td>
+            <td>
+              Autoclicker Bonus:{" "}
+              <NumericDisplay value={autoClickersBonus} shortForm={false} />
+              <br />
+              {/*upgrade autoclicker bonus*/}
+              <button onClick={() => upgradeAutoClickerBonus()}>
+                Upgrade Autoclicker Bonus
+              </button>
+              <CostDisplay cost={1e4 * Math.pow(3, autoClickersBonus)} />
+            </td>
+            <td>
+              Autoclicker Bonus Multiplier:{" "}
+              <NumericDisplay value={autoClickersBonus} shortForm={false} />
+              <br />
+              {/*upgrade autoclicker bonus multiplier*/}
+              <button onClick={() => upgradeAutoClickerBonusMultiplier()}>
+                Upgrade Autoclicker Bonus Multiplier
+              </button>
+              <CostDisplay
+                cost={1e5 * Math.pow(5, autoClickersBonusMultiplier)}
+              />
+            </td>
+          </tr>
+        </tbody>
+      </table>
     </div>
   );
 }
