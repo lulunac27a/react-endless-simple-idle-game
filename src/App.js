@@ -6,12 +6,19 @@ function App() {
   //app component
   const [points, setPoints] = useState(0); //set initial points to 0
   const [pointsPerSecond, setPointsPerSecond] = useState(0); //set initial points per second to 0
-  const [autoClickers, setAutoClickers] = useState(0); //set initial auto clickers to 0
-  const [autoClickersMultiplier, setAutoClickersMultiplier] = useState(1); //set initial auto clickers multiplier to 1
-  const [autoClickersLevelBonus, setAutoClickersLevelBonus] = useState(0); //set initial auto clickers level bonus to 0
-  const [autoClickersBonus, setAutoClickersBonus] = useState(0); //set initial auto clickers bonus to 0
+  const [maxLevel, setMaxLevel] = useState(1); //set max level to 1
+  const [autoClickers, setAutoClickers] = useState([{ value: 0, level: 1 }]); //set initial auto clickers to 0
+  const [autoClickersMultiplier, setAutoClickersMultiplier] = useState([
+    { value: 1, level: 1 },
+  ]); //set initial auto clickers multiplier to 1
+  const [autoClickersLevelBonus, setAutoClickersLevelBonus] = useState([
+    { value: 0, level: 1 },
+  ]); //set initial auto clickers level bonus to 0
+  const [autoClickersBonus, setAutoClickersBonus] = useState([
+    { value: 0, level: 1 },
+  ]); //set initial auto clickers bonus to 0
   const [autoClickersBonusMultiplier, setAutoClickersBonusMultiplier] =
-    useState(0); //set initial auto clickers bonus multiplier to 0
+    useState([{ value: 0, level: 1 }]); //set initial auto clickers bonus multiplier to 0
   const [clicks, setClicks] = useState(0); //set initial clicks pressed to 0
   const [clickMultiplier, setClickMultiplier] = useState(1); //set initial click multiplier to 1
   const [clickersMultiplier, setClickersMultiplier] = useState(1); //set initial clickers multiplier to 1
@@ -29,29 +36,37 @@ function App() {
   }, [clickers, clickersMultiplier, pointsPerSecond, clickerBonus]);
   const updateAutoClickers = useCallback(() => {
     //update points per second for autoclickers
-    setPointsPerSecond(
-      (prevPointsPerSecond) =>
-        autoClickers *
-        autoClickersMultiplier *
-        (1 + (autoClickersLevelBonus * autoClickers) / 100) *
-        (1 +
-          (autoClickersBonus *
-            (autoClickers +
-              autoClickersMultiplier +
-              autoClickersLevelBonus +
-              autoClickersBonus +
-              autoClickersBonusMultiplier)) /
-          100) *
-        (1 +
-          (autoClickersBonusMultiplier *
-            (autoClickers +
-              autoClickersMultiplier * 2 +
-              autoClickersLevelBonus * 3 +
-              autoClickersBonus * 4 +
-              autoClickersBonusMultiplier * 5)) /
-          100) *
-        (1 + (timeMultiplierBonus * seconds) / 10000) *
-        (1 + (clickMultiplierBonus * clicks) / 10000),
+    setPointsPerSecond((prevPointsPerSecond) =>
+      autoClickers.reduce(
+        (sum, clicker) =>
+          sum +
+          clicker.value *
+          autoClickersMultiplier[clicker.level - 1].value *
+          (1 +
+            (autoClickersLevelBonus[clicker.level - 1].value *
+              clicker.value) /
+            100) *
+          (1 +
+            (autoClickersBonus[clicker.level - 1].value *
+              (clicker.value +
+                autoClickersMultiplier[clicker.level - 1].value +
+                autoClickersLevelBonus[clicker.level - 1].value +
+                autoClickersBonus[clicker.level - 1].value +
+                autoClickersBonusMultiplier[clicker.level - 1].value)) /
+            100) *
+          (1 +
+            (autoClickersBonusMultiplier[clicker.level - 1].value *
+              (clicker.value +
+                autoClickersMultiplier[clicker.level - 1].value * 2 +
+                autoClickersLevelBonus[clicker.level - 1].value * 3 +
+                autoClickersBonus[clicker.level - 1].value * 4 +
+                autoClickersBonusMultiplier[clicker.level - 1].value * 5)) /
+            100) *
+          (1 + (timeMultiplierBonus * seconds) / 10000) *
+          (1 + (clickMultiplierBonus * clicks) / 10000) *
+          clicker.level,
+        0,
+      ),
     ); //set points per second
   }, [
     autoClickers,
@@ -115,73 +130,147 @@ function App() {
       updateClickers(); //update clickers value
     }
   }
-  function upgradeAutoClicker() {
+  function upgradeAutoClicker(level) {
     //upgrade autoclicker
-    if (checkPointsForUpgrade(points, 10 * Math.pow(2, autoClickers))) {
-      setPoints((prevPoints) => prevPoints - 10 * Math.pow(2, autoClickers));
-      setAutoClickers((prevAutoClickers) => prevAutoClickers + 1); //increase autoclickers by 1
+    if (
+      checkPointsForUpgrade(
+        points,
+        10 *
+        Math.pow(2, autoClickers[level - 1].value) *
+        Math.pow(10, level - 1),
+      )
+    ) {
+      setPoints(
+        (prevPoints) =>
+          prevPoints -
+          10 *
+          Math.pow(2, autoClickers[level - 1].value) *
+          Math.pow(10, level - 1),
+      );
+      setAutoClickers((prevAutoClickers) =>
+        prevAutoClickers.map((lvl) =>
+          lvl.level === level
+            ? Object.assign({}, lvl, {
+              value: prevAutoClickers[lvl.level - 1].value + 1,
+            })
+            : lvl,
+        ),
+      ); //increase autoclickers by 1
       updateAutoClickers(); //update auto clickers value
     }
   }
-  function upgradeAutoClickerMultiplier() {
+  function upgradeAutoClickerMultiplier(level) {
     //upgrade autoclicker multiplier
     if (
       checkPointsForUpgrade(
         points,
-        100 * Math.pow(2, autoClickersMultiplier - 1),
+        100 *
+        Math.pow(2, autoClickersMultiplier[level - 1].value - 1) *
+        Math.pow(10, level - 1),
       )
     ) {
       setPoints(
         (prevPoints) =>
-          prevPoints - 100 * Math.pow(2, autoClickersMultiplier - 1),
+          prevPoints -
+          100 *
+          Math.pow(2, autoClickersMultiplier[level - 1].value - 1) *
+          Math.pow(10, level - 1),
       );
-      setAutoClickersMultiplier(
-        (prevAutoClickersMultiplier) => prevAutoClickersMultiplier + 1,
+      setAutoClickersMultiplier((prevAutoClickersMultiplier) =>
+        prevAutoClickersMultiplier.map((lvl) =>
+          lvl.level === level
+            ? Object.assign({}, lvl, {
+              value: prevAutoClickersMultiplier[0].value + 1,
+            })
+            : lvl,
+        ),
       ); //increase autoclickers multiplier by 1
       updateAutoClickers(); //update auto clickers value
     }
   }
-  function upgradeAutoClickerLevelBonus() {
+  function upgradeAutoClickerLevelBonus(level) {
     //upgrade autoclicker level bonus
-    if (
-      checkPointsForUpgrade(points, 1e3 * Math.pow(2, autoClickersLevelBonus))
-    ) {
-      setPoints(
-        (prevPoints) => prevPoints - 1e3 * Math.pow(2, autoClickersLevelBonus),
-      );
-      setAutoClickersLevelBonus(
-        (prevAutoClickersLevelBonus) => prevAutoClickersLevelBonus + 1,
-      ); //increase autoclickers level bonus by 1
-      updateAutoClickers(); //update auto clickers value
-    }
-  }
-  function upgradeAutoClickerBonus() {
-    //upgrade autoclicker bonus based on number of upgrades bought
-    if (checkPointsForUpgrade(points, 1e4 * Math.pow(3, autoClickersBonus))) {
-      setPoints(
-        (prevPoints) => prevPoints - 1e4 * Math.pow(3, autoClickersBonus),
-      );
-      setAutoClickersBonus(
-        (prevAutoClickersBonus) => prevAutoClickersBonus + 1,
-      ); //increase autoclickers bonus by 1
-      updateAutoClickers(); //update auto clickers value
-    }
-  }
-  function upgradeAutoClickerBonusMultiplier() {
-    //upgrade autoclicker bonus multiplier based on number of upgrades bought with more expensive upgrades gets more multiplier
     if (
       checkPointsForUpgrade(
         points,
-        1e5 * Math.pow(5, autoClickersBonusMultiplier),
+        1e3 *
+        Math.pow(2, autoClickersLevelBonus[level - 1].value) *
+        Math.pow(10, level - 1),
       )
     ) {
       setPoints(
         (prevPoints) =>
-          prevPoints - 1e5 * Math.pow(5, autoClickersBonusMultiplier),
+          prevPoints -
+          1e3 *
+          Math.pow(2, autoClickersLevelBonus[level - 1].value) *
+          Math.pow(10, level - 1),
       );
-      setAutoClickersBonusMultiplier(
-        (prevAutoClickersBonusMultiplier) =>
-          prevAutoClickersBonusMultiplier + 1,
+      setAutoClickersLevelBonus((prevAutoClickersLevelBonus) =>
+        prevAutoClickersLevelBonus.map((lvl) =>
+          lvl.level === level
+            ? Object.assign({}, lvl, {
+              value: prevAutoClickersLevelBonus[0].value + 1,
+            })
+            : lvl,
+        ),
+      ); //increase autoclickers level bonus by 1
+      updateAutoClickers(); //update auto clickers value
+    }
+  }
+  function upgradeAutoClickerBonus(level) {
+    //upgrade autoclicker bonus based on number of upgrades bought
+    if (
+      checkPointsForUpgrade(
+        points,
+        1e4 *
+        Math.pow(3, autoClickersBonus[level - 1].value) *
+        Math.pow(10, level - 1),
+      )
+    ) {
+      setPoints(
+        (prevPoints) =>
+          prevPoints -
+          1e4 *
+          Math.pow(3, autoClickersBonus[level - 1].value) *
+          Math.pow(10, level - 1),
+      );
+      setAutoClickersBonus((prevAutoClickersBonus) =>
+        prevAutoClickersBonus.map((lvl) =>
+          lvl.level === level
+            ? Object.assign({}, lvl, {
+              value: prevAutoClickersBonus[0].value + 1,
+            })
+            : lvl,
+        ),
+      ); //increase autoclickers bonus by 1
+      updateAutoClickers(); //update auto clickers value
+    }
+  }
+  function upgradeAutoClickerBonusMultiplier(level) {
+    //upgrade autoclicker bonus multiplier based on number of upgrades bought with more expensive upgrades gets more multiplier
+    if (
+      checkPointsForUpgrade(
+        points,
+        1e5 *
+        Math.pow(5, autoClickersBonusMultiplier[level - 1].value) *
+        Math.pow(10, level - 1),
+      )
+    ) {
+      setPoints(
+        (prevPoints) =>
+          prevPoints -
+          1e5 *
+          Math.pow(5, autoClickersBonusMultiplier[level - 1].value) *
+          Math.pow(10, level - 1),
+      );
+      setAutoClickersBonusMultiplier((prevAutoClickersBonusMultiplier) =>
+        prevAutoClickersBonusMultiplier.map((lvl) =>
+          lvl.level === level
+            ? Object.assign({}, lvl, {
+              value: prevAutoClickersBonusMultiplier[0].value + 1,
+            })
+            : lvl,
+        ),
       ); //increase autoclickers bonus multiplier by 1
       updateAutoClickers(); //update auto clickers value
     }
@@ -220,6 +309,33 @@ function App() {
       setPoints((prevPoints) => prevPoints - 1e3 * Math.pow(10, clickerBonus));
       setClickerBonus((prevClickerBonus) => prevClickerBonus + 1); //increase clicker bonus by 1
       updateAutoClickers(); //update auto clickers value
+    }
+  }
+  function upgradeMaxLevel() {
+    //upgrade max level
+    if (checkPointsForUpgrade(points, 100 * Math.pow(10, maxLevel - 1))) {
+      setPoints((prevPoints) => prevPoints - 100 * Math.pow(10, maxLevel - 1));
+      setAutoClickers((prevAutoClickers) => [
+        ...prevAutoClickers,
+        { value: 0, level: maxLevel + 1 },
+      ]); //append autoclickers value to end of array
+      setAutoClickersMultiplier((prevAutoClickersMultiplier) => [
+        ...prevAutoClickersMultiplier,
+        { value: 1, level: maxLevel + 1 },
+      ]);
+      setAutoClickersLevelBonus((prevAutoClickersLevelBonus) => [
+        ...prevAutoClickersLevelBonus,
+        { value: 0, level: maxLevel + 1 },
+      ]);
+      setAutoClickersBonus((prevAutoClickersBonus) => [
+        ...prevAutoClickersBonus,
+        { value: 0, level: maxLevel + 1 },
+      ]);
+      setAutoClickersBonusMultiplier((prevAutoClickersBonusMultiplier) => [
+        ...prevAutoClickersBonusMultiplier,
+        { value: 0, level: maxLevel + 1 },
+      ]);
+      setMaxLevel((prevMaxLevel) => prevMaxLevel + 1); //increase max level by 1
     }
   }
   return (
@@ -291,7 +407,6 @@ function App() {
           <CostDisplay cost={1e3 * Math.pow(10, clickerBonus)} />
         </td>
       </tr>
-
       <table>
         <thead>
           <tr>
@@ -335,70 +450,112 @@ function App() {
               <CostDisplay cost={100 * Math.pow(2, clickersMultiplier - 1)} />
             </td>
           </tr>
-          <tr>
-            <td>
-              Autoclicker Level:{" "}
-              <NumericDisplay value={autoClickers} shortForm={false} />
-              <br />
-              {/*upgrade autoclicker (points per second)*/}
-              <button onClick={() => upgradeAutoClicker()}>
-                Upgrade Autoclicker
-              </button>
-              <CostDisplay cost={10 * Math.pow(2, autoClickers)} />
-            </td>
-            <td>
-              Autoclicker Multiplier Level:{" "}
-              <NumericDisplay
-                value={autoClickersMultiplier}
-                shortForm={false}
-              />
-              <br />
-              {/*upgrade autoclicker multiplier*/}
-              <button onClick={() => upgradeAutoClickerMultiplier()}>
-                Upgrade Autoclicker Multiplier
-              </button>
-              <CostDisplay
-                cost={100 * Math.pow(2, autoClickersMultiplier - 1)}
-              />
-            </td>
-            <td>
-              Autoclicker Level Bonus:{" "}
-              <NumericDisplay
-                value={autoClickersLevelBonus}
-                shortForm={false}
-              />
-              <br />
-              {/*upgrade autoclicker level bonus*/}
-              <button onClick={() => upgradeAutoClickerLevelBonus()}>
-                Upgrade Autoclicker Level Bonus
-              </button>
-              <CostDisplay cost={1e3 * Math.pow(2, autoClickersLevelBonus)} />
-            </td>
-            <td>
-              Autoclicker Bonus:{" "}
-              <NumericDisplay value={autoClickersBonus} shortForm={false} />
-              <br />
-              {/*upgrade autoclicker bonus*/}
-              <button onClick={() => upgradeAutoClickerBonus()}>
-                Upgrade Autoclicker Bonus
-              </button>
-              <CostDisplay cost={1e4 * Math.pow(3, autoClickersBonus)} />
-            </td>
-            <td>
-              Autoclicker Bonus Multiplier:{" "}
-              <NumericDisplay value={autoClickersBonus} shortForm={false} />
-              <br />
-              {/*upgrade autoclicker bonus multiplier*/}
-              <button onClick={() => upgradeAutoClickerBonusMultiplier()}>
-                Upgrade Autoclicker Bonus Multiplier
-              </button>
-              <CostDisplay
-                cost={1e5 * Math.pow(5, autoClickersBonusMultiplier)}
-              />
-            </td>
-          </tr>
+          {Array.from({ length: maxLevel }, (_, i) => (
+            <tr key={i + 1}>
+              <td>
+                Autoclicker Level:{" "}
+                <NumericDisplay
+                  value={autoClickers[i].value}
+                  shortForm={false}
+                />
+                <br />
+                {/*upgrade autoclicker (points per second)*/}
+                <button onClick={() => upgradeAutoClicker(i + 1)}>
+                  Upgrade Autoclicker
+                </button>
+                <CostDisplay
+                  cost={
+                    10 * Math.pow(2, autoClickers[i].value) * Math.pow(10, i)
+                  }
+                />
+              </td>
+              <td>
+                Autoclicker Multiplier Level:{" "}
+                <NumericDisplay
+                  value={autoClickersMultiplier[i].value}
+                  shortForm={false}
+                />
+                <br />
+                {/*upgrade autoclicker multiplier*/}
+                <button onClick={() => upgradeAutoClickerMultiplier(i + 1)}>
+                  Upgrade Autoclicker Multiplier
+                </button>
+                <CostDisplay
+                  cost={
+                    100 *
+                    Math.pow(2, autoClickersMultiplier[i].value - 1) *
+                    Math.pow(10, i)
+                  }
+                />
+              </td>
+              <td>
+                Autoclicker Level Bonus:{" "}
+                <NumericDisplay
+                  value={autoClickersLevelBonus[i].value}
+                  shortForm={false}
+                />
+                <br />
+                {/*upgrade autoclicker level bonus*/}
+                <button onClick={() => upgradeAutoClickerLevelBonus(i + 1)}>
+                  Upgrade Autoclicker Level Bonus
+                </button>
+                <CostDisplay
+                  cost={
+                    1e3 *
+                    Math.pow(2, autoClickersLevelBonus[i].value) *
+                    Math.pow(10, i)
+                  }
+                />
+              </td>
+              <td>
+                Autoclicker Bonus:{" "}
+                <NumericDisplay
+                  value={autoClickersBonus[i].value}
+                  shortForm={false}
+                />
+                <br />
+                {/*upgrade autoclicker bonus*/}
+                <button onClick={() => upgradeAutoClickerBonus(i + 1)}>
+                  Upgrade Autoclicker Bonus
+                </button>
+                <CostDisplay
+                  cost={
+                    1e4 *
+                    Math.pow(3, autoClickersBonus[i].value) *
+                    Math.pow(10, i)
+                  }
+                />
+              </td>
+              <td>
+                Autoclicker Bonus Multiplier:{" "}
+                <NumericDisplay
+                  value={autoClickersBonus[i].value}
+                  shortForm={false}
+                />
+                <br />
+                {/*upgrade autoclicker bonus multiplier*/}
+                <button
+                  onClick={() => upgradeAutoClickerBonusMultiplier(i + 1)}
+                >
+                  Upgrade Autoclicker Bonus Multiplier
+                </button>
+                <CostDisplay
+                  cost={
+                    1e5 *
+                    Math.pow(5, autoClickersBonusMultiplier[i].value) *
+                    Math.pow(10, i)
+                  }
+                />
+              </td>
+            </tr>
+          ))}
         </tbody>
       </table>
+      Max Level: <NumericDisplay value={maxLevel} shortForm={false} />
+      <br />
+      {/*upgrade max level*/}
+      <button onClick={() => upgradeMaxLevel()}>Upgrade Max Level</button>
+      <CostDisplay cost={100 * Math.pow(10, maxLevel - 1)} />
     </div>
   );
 }
