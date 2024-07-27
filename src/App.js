@@ -26,11 +26,19 @@ function App() {
   const [clickMultiplierBonus, setClickMultiplierBonus] = useState(0); //set initial click multiplier bonus to 0
   const [clickerBonus, setClickerBonus] = useState(0); //set initial clicker bonus to 0
   const [clickers, setClickers] = useState(1); //set initial clickers to 1
-  const [clicksMultiplier, setClicksMultiplier] = useState(1); //set clicks multiplier to 1
+  const [clicksMultiplier, setClicksMultiplier] = useState(1); //set initial clicks multiplier to 1
   const [seconds, setSeconds] = useState(0); //set initial seconds played to 0
-  const [secondsMultiplier, setSecondsMultiplier] = useState(1); //set clicks multiplier to 1
-  const [totalUpgrades, setTotalUpgrades] = useState(0); //set total upgrades to 0
-  const [totalUpgradesMultiplier, setTotalUpgradesMultiplier] = useState(0); //set total upgrades multiplier to 0
+  const [secondsMultiplier, setSecondsMultiplier] = useState(1); //set initial clicks multiplier to 1
+  const [totalUpgrades, setTotalUpgrades] = useState(0); //set initial total upgrades to 0
+  const [totalUpgradesMultiplier, setTotalUpgradesMultiplier] = useState(0); //set initial total upgrades multiplier to 0
+  const [upgradeLevel, setUpgradeLevel] = useState(1); //set initial upgrade level to 1
+  const [upgradeLevelXp, setUpgradeLevelXp] = useState(0); //set initial upgrade level XP to 1
+  const [upgradeLevelXpRequired, setUpgradeLevelXpRequired] = useState(1); //set initial upgrade level XP required to 1
+  const [upgradeLevelMultiplier, setUpgradeLevelMultiplier] = useState(0); //set initial upgrade level multiplier to 0
+  const [logLevel, setLogLevel] = useState(1); //set initial log level to 1
+  const [logLevelXp, setLogLevelXp] = useState(0); //set initial log level XP to 0
+  const [logLevelXpRequired, setLogLevelXpRequired] = useState(1); //set initial log level XP required to 1
+  const [logLevelMultiplier, setLogLevelMultiplier] = useState(0); //set initial log level multiplier to 0
   const updateClickers = useCallback(() => {
     //update click multiplier for clickers
     setClickMultiplier(
@@ -69,6 +77,8 @@ function App() {
           (1 + (timeMultiplierBonus * seconds) / 10000) *
           (1 + (clickMultiplierBonus * clicks) / 10000) *
           (1 + (totalUpgradesMultiplier * totalUpgrades) / 1000) *
+          (1 + (upgradeLevelMultiplier * upgradeLevel) / 100) *
+          (1 + (logLevelMultiplier * logLevel) / 100) *
           clicker.level,
         0,
       ),
@@ -81,10 +91,14 @@ function App() {
     autoClickersMultiplier,
     clickMultiplierBonus,
     clicks,
+    logLevel,
+    logLevelMultiplier,
     seconds,
     timeMultiplierBonus,
     totalUpgrades,
     totalUpgradesMultiplier,
+    upgradeLevel,
+    upgradeLevelMultiplier,
   ]);
   useEffect(() => {
     const interval = setInterval(() => {
@@ -103,6 +117,11 @@ function App() {
     //check if user has enough points to upgrade
     if (pointsRequired !== 0 && points >= pointsRequired) {
       //make sure points required is not 0 and user has enough points to upgrade
+      setLogLevelXp(
+        (prevLogLevelXp) =>
+          prevLogLevelXp + Math.log(Math.max(pointsRequired + 1, 1)),
+      ); //increase log level XP
+      checkLogLevel(); //check if log level has enough XP to level up
       return true;
     } else {
       //not enough points required to upgrade
@@ -120,6 +139,8 @@ function App() {
   function upgradeClicker() {
     //upgrade clicker (points per click)
     if (checkPointsForUpgrade(points, 10 * Math.pow(2, clickers - 1))) {
+      setUpgradeLevelXp((prevUpgradeLevelXp) => prevUpgradeLevelXp + clickers); //increase upgrade level XP by clickers
+      checkUpgradeLevel(); //check if upgrade level has enough XP to level up
       setPoints((prevPoints) => prevPoints - 10 * Math.pow(2, clickers - 1)); //spend points
       setClickers((prevClickers) => prevClickers + 1); //increase clickers by 1
       updateClickers(); //update clickers value
@@ -131,6 +152,10 @@ function App() {
     if (
       checkPointsForUpgrade(points, 100 * Math.pow(2, clickersMultiplier - 1))
     ) {
+      setUpgradeLevelXp(
+        (prevUpgradeLevelXp) => prevUpgradeLevelXp + clickersMultiplier,
+      ); //increase upgrade level XP by clickers multiplier
+      checkUpgradeLevel(); //check if upgrade level has enough XP to level up
       setPoints(
         (prevPoints) => prevPoints - 100 * Math.pow(2, clickersMultiplier - 1),
       ); //spend points
@@ -151,6 +176,11 @@ function App() {
         Math.pow(10, level - 1),
       )
     ) {
+      setUpgradeLevelXp(
+        (prevUpgradeLevelXp) =>
+          prevUpgradeLevelXp + autoClickers[level - 1].value * level,
+      ); //increase upgrade level XP by autoclickers times level
+      checkUpgradeLevel(); //check if upgrade level has enough XP to level up
       setPoints(
         (prevPoints) =>
           prevPoints -
@@ -181,6 +211,11 @@ function App() {
         Math.pow(10, level - 1),
       )
     ) {
+      setUpgradeLevelXp(
+        (prevUpgradeLevelXp) =>
+          prevUpgradeLevelXp + autoClickersMultiplier[level - 1].value * level,
+      ); //increase upgrade level XP by autoclickers multiplier times level
+      checkUpgradeLevel(); //check if upgrade level has enough XP to level up
       setPoints(
         (prevPoints) =>
           prevPoints -
@@ -211,6 +246,11 @@ function App() {
         Math.pow(10, level - 1),
       )
     ) {
+      setUpgradeLevelXp(
+        (prevUpgradeLevelXp) =>
+          prevUpgradeLevelXp + autoClickersLevelBonus[level - 1].value * level,
+      ); //increase upgrade level XP by autoclickers level bonus times level
+      checkUpgradeLevel(); //check if upgrade level has enough XP to level up
       setPoints(
         (prevPoints) =>
           prevPoints -
@@ -241,6 +281,11 @@ function App() {
         Math.pow(10, level - 1),
       )
     ) {
+      setUpgradeLevelXp(
+        (prevUpgradeLevelXp) =>
+          prevUpgradeLevelXp + autoClickersBonus[level - 1].value * level,
+      ); //increase upgrade level XP by autoclickers bonus times level
+      checkUpgradeLevel(); //check if upgrade level has enough XP to level up
       setPoints(
         (prevPoints) =>
           prevPoints -
@@ -271,6 +316,12 @@ function App() {
         Math.pow(10, level - 1),
       )
     ) {
+      setUpgradeLevelXp(
+        (prevUpgradeLevelXp) =>
+          prevUpgradeLevelXp +
+          autoClickersBonusMultiplier[level - 1].value * level,
+      ); //increase upgrade level XP by autoclickers bonus multiplier times level
+      checkUpgradeLevel(); //check if upgrade level has enough XP to level up
       setPoints(
         (prevPoints) =>
           prevPoints -
@@ -296,6 +347,11 @@ function App() {
     if (
       checkPointsForUpgrade(points, 2.5e3 * Math.pow(10, timeMultiplierBonus))
     ) {
+      setUpgradeLevelXp(
+        (prevUpgradeLevelXp) =>
+          prevUpgradeLevelXp + (timeMultiplierBonus + 1) * 3,
+      ); //increase upgrade level XP by time multiplier bonus
+      checkUpgradeLevel(); //check if upgrade level has enough XP to level up
       setPoints(
         (prevPoints) => prevPoints - 2.5e3 * Math.pow(10, timeMultiplierBonus),
       );
@@ -311,6 +367,11 @@ function App() {
     if (
       checkPointsForUpgrade(points, 5e3 * Math.pow(10, clickMultiplierBonus))
     ) {
+      setUpgradeLevelXp(
+        (prevUpgradeLevelXp) =>
+          prevUpgradeLevelXp + (clickMultiplierBonus + 1) * 5,
+      ); //increase upgrade level XP by click multiplier bonus
+      checkUpgradeLevel(); //check if upgrade level has enough XP to level up
       setPoints(
         (prevPoints) => prevPoints - 5e3 * Math.pow(10, clickMultiplierBonus),
       );
@@ -324,6 +385,10 @@ function App() {
   function upgradeClickerBonus() {
     //upgrade clicker bonus based on points per second
     if (checkPointsForUpgrade(points, 1e3 * Math.pow(10, clickerBonus))) {
+      setUpgradeLevelXp(
+        (prevUpgradeLevelXp) => prevUpgradeLevelXp + (clickerBonus + 1) * 3,
+      ); //increase upgrade level XP by clicker bonus
+      checkUpgradeLevel(); //check if upgrade level has enough XP to level up
       setPoints((prevPoints) => prevPoints - 1e3 * Math.pow(10, clickerBonus));
       setClickerBonus((prevClickerBonus) => prevClickerBonus + 1); //increase clicker bonus by 1
       updateAutoClickers(); //update auto clickers value
@@ -333,7 +398,6 @@ function App() {
   function upgradeMaxLevel() {
     //upgrade max level
     if (checkPointsForUpgrade(points, 100 * Math.pow(10, maxLevel - 1))) {
-      setPoints((prevPoints) => prevPoints - 100 * Math.pow(10, maxLevel - 1));
       setAutoClickers((prevAutoClickers) => [
         ...prevAutoClickers,
         { value: 0, level: maxLevel + 1 },
@@ -355,7 +419,6 @@ function App() {
         { value: 0, level: maxLevel + 1 },
       ]);
       setMaxLevel((prevMaxLevel) => prevMaxLevel + 1); //increase max level by 1
-      setTotalUpgrades((prevTotalUpgrades) => prevTotalUpgrades + 1); //increase total upgrades by 1
     }
   }
   function upgradeSecondsMultiplier() {
@@ -363,6 +426,10 @@ function App() {
     if (
       checkPointsForUpgrade(points, 1e5 * Math.pow(10, secondsMultiplier - 1))
     ) {
+      setUpgradeLevelXp(
+        (prevUpgradeLevelXp) => prevUpgradeLevelXp + secondsMultiplier * 5,
+      ); //increase upgrade level XP by seconds multiplier
+      checkUpgradeLevel(); //check if upgrade level has enough XP to level up
       setPoints(
         (prevPoints) => prevPoints - 1e5 * Math.pow(10, secondsMultiplier - 1),
       );
@@ -377,6 +444,10 @@ function App() {
     if (
       checkPointsForUpgrade(points, 1e6 * Math.pow(10, clicksMultiplier - 1))
     ) {
+      setUpgradeLevelXp(
+        (prevUpgradeLevelXp) => prevUpgradeLevelXp + clicksMultiplier * 6,
+      ); //increase upgrade level XP by clicks multiplier
+      checkUpgradeLevel(); //check if upgrade level has enough XP to level up
       setPoints(
         (prevPoints) => prevPoints - 1e6 * Math.pow(10, clicksMultiplier - 1),
       );
@@ -389,6 +460,11 @@ function App() {
     if (
       checkPointsForUpgrade(points, 5e4 * Math.pow(10, totalUpgradesMultiplier))
     ) {
+      setUpgradeLevelXp(
+        (prevUpgradeLevelXp) =>
+          prevUpgradeLevelXp + (totalUpgradesMultiplier + 1) * 5,
+      ); //increase upgrade level XP by total upgrades multiplier
+      checkUpgradeLevel(); //check if upgrade level has enough XP to level up
       setPoints(
         (prevPoints) =>
           prevPoints - 5e4 * Math.pow(10, totalUpgradesMultiplier),
@@ -399,6 +475,64 @@ function App() {
       setTotalUpgrades((prevTotalUpgrades) => prevTotalUpgrades + 1); //increase total upgrades by 1
     }
   }
+  function upgradeLevelUpgradeMultiplier() {
+    if (checkPointsForUpgrade(2.5e4 * Math.pow(10, upgradeLevelMultiplier))) {
+      setUpgradeLevelXp(
+        (prevUpgradeLevelXp) =>
+          prevUpgradeLevelXp + (upgradeLevelMultiplier + 1) * 4,
+      ); //increase upgrade level XP by upgrade level multiplier
+      checkUpgradeLevel(); //check if upgrade level has enough XP to level up
+      setPoints(
+        (prevPoints) =>
+          prevPoints - 2.5e4 * Math.pow(10, upgradeLevelMultiplier),
+      );
+      setTotalUpgrades((prevTotalUpgrades) => prevTotalUpgrades + 1); //increase total upgrades by 1
+      setUpgradeLevelMultiplier(
+        (prevUpgradeLevelMultiplier) => prevUpgradeLevelMultiplier + 1,
+      ); //increase upgrade level multiplier by 1
+    }
+  }
+  function upgradeLogLevelMultiplier() {
+    if (checkPointsForUpgrade(5e5 * Math.pow(10, logLevelMultiplier))) {
+      setUpgradeLevelXp(
+        (prevUpgradeLevelXp) =>
+          prevUpgradeLevelXp + (logLevelMultiplier + 1) * 5,
+      ); //increase upgrade level XP by log level multiplier
+      checkUpgradeLevel(); //check if upgrade level has enough XP to level up
+      setPoints(
+        (prevPoints) => prevPoints - 2.5e4 * Math.pow(10, logLevelMultiplier),
+      );
+      setTotalUpgrades((prevTotalUpgrades) => prevTotalUpgrades + 1); //increase total upgrades by 1
+      setLogLevelMultiplier(
+        (prevLogLevelMultiplier) => prevLogLevelMultiplier + 1,
+      ); //increase log level multiplier by 1
+    }
+  }
+  function checkUpgradeLevel() {
+    //check if upgrade level XP is higher than or equal to XP required
+    if (upgradeLevelXp >= upgradeLevelXpRequired) {
+      setUpgradeLevelXp(
+        (prevUpgradeLevelXp) => prevUpgradeLevelXp - upgradeLevelXpRequired,
+      ); //decrease upgrade level XP by XP required
+      checkUpgradeLevel(); //check if upgrade level has enough XP to level up
+      setUpgradeLevelXpRequired(
+        (prevUpgradeLevelXpRequired) =>
+          prevUpgradeLevelXpRequired + upgradeLevel + 1,
+      ); //increase XP required to level up by upgrade level
+      setUpgradeLevel((prevUpgradeLevel) => prevUpgradeLevel + 1); //increase upgrade level by 1
+    }
+  }
+  function checkLogLevel() {
+    //check if log level XP is higher than or equal to XP required
+    if (logLevelXp >= logLevelXpRequired) {
+      setLogLevelXp((prevLogLevelXp) => prevLogLevelXp - logLevelXpRequired); //decrease log level XP by XP required
+      setLogLevelXpRequired(
+        (prevLogLevelXpRequired) => prevLogLevelXpRequired + logLevel + 1,
+      ); //increase XP required to level up by log level
+      setLogLevel((prevLogLevel) => prevLogLevel + 1); //increase log level by 1
+    }
+  }
+
   return (
     //dynamic app HTML output
     <div className="App">
@@ -502,6 +636,30 @@ function App() {
             Upgrade Total Upgrades Multiplier
           </button>
           <CostDisplay cost={5e4 * Math.pow(10, totalUpgradesMultiplier)} />
+        </td>
+      </tr>
+      <tr>
+        <td>
+          Level Upgrade Multiplier:{' '}
+          <NumericDisplay value={upgradeLevelMultiplier} shortForm={false} />
+          <br />
+          {/*upgrade level upgrades multiplier*/}
+          <button onClick={() => upgradeLevelUpgradeMultiplier()}>
+            Upgrade Level Upgrade Multiplier
+          </button>
+          <CostDisplay cost={2.5e4 * Math.pow(10, upgradeLevelMultiplier)} />
+        </td>
+      </tr>
+      <tr>
+        <td>
+          Log Level Multiplier:{' '}
+          <NumericDisplay value={logLevelMultiplier} shortForm={false} />
+          <br />
+          {/*upgrade log level multiplier*/}
+          <button onClick={() => upgradeLogLevelMultiplier()}>
+            Upgrade Log Level Multiplier
+          </button>
+          <CostDisplay cost={5e5 * Math.pow(10, logLevelMultiplier)} />
         </td>
       </tr>
       <table>
