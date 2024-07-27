@@ -122,6 +122,7 @@ function App() {
           prevLogLevelXp + Math.log(Math.max(pointsRequired + 1, 1)),
       ); //increase log level XP
       checkLogLevel(); //check if log level has enough XP to level up
+      checkUpgradeLevel(); //check if upgrade level has enough XP to level up
       return true;
     } else {
       //not enough points required to upgrade
@@ -514,7 +515,6 @@ function App() {
       setUpgradeLevelXp(
         (prevUpgradeLevelXp) => prevUpgradeLevelXp - upgradeLevelXpRequired,
       ); //decrease upgrade level XP by XP required
-      checkUpgradeLevel(); //check if upgrade level has enough XP to level up
       setUpgradeLevelXpRequired(
         (prevUpgradeLevelXpRequired) =>
           prevUpgradeLevelXpRequired + upgradeLevel + 1,
@@ -561,6 +561,20 @@ function App() {
         Points per second:{' '}
         <span id="points-display">
           <NumericDisplay value={pointsPerSecond} />
+        </span>
+      </p>
+      {/*display upgrade level*/}
+      <p>
+        Upgrade level:{' '}
+        <span id="level-display">
+          <NumericDisplay value={upgradeLevel} />
+        </span>
+      </p>
+      {/*display log level*/}
+      <p>
+        Log level:{' '}
+        <span id="level-display">
+          <NumericDisplay value={logLevel} />
         </span>
       </p>
       {/*increase points from clicking a button*/}

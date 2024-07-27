@@ -15,7 +15,8 @@
   color: white;
 }
 
-#points-display {
+#points-display,
+#level-display {
   font-weight: bold; /*bold the numeric values*/
 }
 
