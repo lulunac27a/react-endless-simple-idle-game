@@ -29,6 +29,8 @@ function App() {
   const [clicksMultiplier, setClicksMultiplier] = useState(1); //set clicks multiplier to 1
   const [seconds, setSeconds] = useState(0); //set initial seconds played to 0
   const [secondsMultiplier, setSecondsMultiplier] = useState(1); //set clicks multiplier to 1
+  const [totalUpgrades, setTotalUpgrades] = useState(0); //set total upgrades to 0
+  const [totalUpgradesMultiplier, setTotalUpgradesMultiplier] = useState(0); //set total upgrades multiplier to 0
   const updateClickers = useCallback(() => {
     //update click multiplier for clickers
     setClickMultiplier(
@@ -66,6 +68,7 @@ function App() {
             100) *
           (1 + (timeMultiplierBonus * seconds) / 10000) *
           (1 + (clickMultiplierBonus * clicks) / 10000) *
+          (1 + (totalUpgradesMultiplier * totalUpgrades) / 1000) *
           clicker.level,
         0,
       ),
@@ -80,6 +83,8 @@ function App() {
     clicks,
     seconds,
     timeMultiplierBonus,
+    totalUpgrades,
+    totalUpgradesMultiplier,
   ]);
   useEffect(() => {
     const interval = setInterval(() => {
@@ -118,6 +123,7 @@ function App() {
       setPoints((prevPoints) => prevPoints - 10 * Math.pow(2, clickers - 1)); //spend points
       setClickers((prevClickers) => prevClickers + 1); //increase clickers by 1
       updateClickers(); //update clickers value
+      setTotalUpgrades((prevTotalUpgrades) => prevTotalUpgrades + 1); //increase total upgrades by 1
     }
   }
   function upgradeClickerMultiplier() {
@@ -132,6 +138,7 @@ function App() {
         (prevClickersMultiplier) => prevClickersMultiplier + 1,
       ); //increase clickers multiplier by 1
       updateClickers(); //update clickers value
+      setTotalUpgrades((prevTotalUpgrades) => prevTotalUpgrades + 1); //increase total upgrades by 1
     }
   }
   function upgradeAutoClicker(level) {
@@ -161,6 +168,7 @@ function App() {
         ),
       ); //increase autoclickers by 1
       updateAutoClickers(); //update auto clickers value
+      setTotalUpgrades((prevTotalUpgrades) => prevTotalUpgrades + 1); //increase total upgrades by 1
     }
   }
   function upgradeAutoClickerMultiplier(level) {
@@ -190,6 +198,7 @@ function App() {
         ),
       ); //increase autoclickers multiplier by 1
       updateAutoClickers(); //update auto clickers value
+      setTotalUpgrades((prevTotalUpgrades) => prevTotalUpgrades + 1); //increase total upgrades by 1
     }
   }
   function upgradeAutoClickerLevelBonus(level) {
@@ -219,6 +228,7 @@ function App() {
         ),
       ); //increase autoclickers level bonus by 1
       updateAutoClickers(); //update auto clickers value
+      setTotalUpgrades((prevTotalUpgrades) => prevTotalUpgrades + 1); //increase total upgrades by 1
     }
   }
   function upgradeAutoClickerBonus(level) {
@@ -248,6 +258,7 @@ function App() {
         ),
       ); //increase autoclickers bonus by 1
       updateAutoClickers(); //update auto clickers value
+      setTotalUpgrades((prevTotalUpgrades) => prevTotalUpgrades + 1); //increase total upgrades by 1
     }
   }
   function upgradeAutoClickerBonusMultiplier(level) {
@@ -277,6 +288,7 @@ function App() {
         ),
       ); //increase autoclickers bonus multiplier by 1
       updateAutoClickers(); //update auto clickers value
+      setTotalUpgrades((prevTotalUpgrades) => prevTotalUpgrades + 1); //increase total upgrades by 1
     }
   }
   function upgradeTimeMultiplierBonus() {
@@ -291,6 +303,7 @@ function App() {
         (prevTimeMultiplierBonus) => prevTimeMultiplierBonus + 1,
       ); //increase time multiplier bonus by 1
       updateAutoClickers(); //update auto clickers value
+      setTotalUpgrades((prevTotalUpgrades) => prevTotalUpgrades + 1); //increase total upgrades by 1
     }
   }
   function upgradeClickMultiplierBonus() {
@@ -305,6 +318,7 @@ function App() {
         (prevClickMultiplierBonus) => prevClickMultiplierBonus + 1,
       ); //increase click multiplier bonus by 1
       updateAutoClickers(); //update auto clickers value
+      setTotalUpgrades((prevTotalUpgrades) => prevTotalUpgrades + 1); //increase total upgrades by 1
     }
   }
   function upgradeClickerBonus() {
@@ -313,6 +327,7 @@ function App() {
       setPoints((prevPoints) => prevPoints - 1e3 * Math.pow(10, clickerBonus));
       setClickerBonus((prevClickerBonus) => prevClickerBonus + 1); //increase clicker bonus by 1
       updateAutoClickers(); //update auto clickers value
+      setTotalUpgrades((prevTotalUpgrades) => prevTotalUpgrades + 1); //increase total upgrades by 1
     }
   }
   function upgradeMaxLevel() {
@@ -340,6 +355,7 @@ function App() {
         { value: 0, level: maxLevel + 1 },
       ]);
       setMaxLevel((prevMaxLevel) => prevMaxLevel + 1); //increase max level by 1
+      setTotalUpgrades((prevTotalUpgrades) => prevTotalUpgrades + 1); //increase total upgrades by 1
     }
   }
   function upgradeSecondsMultiplier() {
@@ -353,6 +369,7 @@ function App() {
       setSecondsMultiplier(
         (prevSecondsMultiplier) => prevSecondsMultiplier + 1,
       ); //increase seconds multiplier by 1
+      setTotalUpgrades((prevTotalUpgrades) => prevTotalUpgrades + 1); //increase total upgrades by 1
     }
   }
   function upgradeClicksMultiplier() {
@@ -364,6 +381,22 @@ function App() {
         (prevPoints) => prevPoints - 1e6 * Math.pow(10, clicksMultiplier - 1),
       );
       setClicksMultiplier((prevClicksMultiplier) => prevClicksMultiplier + 1); //increase clicks multiplier by 1
+      setTotalUpgrades((prevTotalUpgrades) => prevTotalUpgrades + 1); //increase total upgrades by 1
+    }
+  }
+  function upgradeTotalUpgradesMultiplier() {
+    //upgrade total upgrades multiplier
+    if (
+      checkPointsForUpgrade(points, 5e4 * Math.pow(10, totalUpgradesMultiplier))
+    ) {
+      setPoints(
+        (prevPoints) =>
+          prevPoints - 5e4 * Math.pow(10, totalUpgradesMultiplier),
+      );
+      setTotalUpgradesMultiplier(
+        (prevTotalUpgradesMultiplier) => prevTotalUpgradesMultiplier + 1,
+      ); //increase total upgrades multiplier by 1
+      setTotalUpgrades((prevTotalUpgrades) => prevTotalUpgrades + 1); //increase total upgrades by 1
     }
   }
   return (
@@ -440,7 +473,7 @@ function App() {
           Seconds Multiplier:{' '}
           <NumericDisplay value={secondsMultiplier} shortForm={false} />
           <br />
-          {/*upgrade clicker bonus*/}
+          {/*upgrade seconds multiplier*/}
           <button onClick={() => upgradeSecondsMultiplier()}>
             Upgrade Seconds Multiplier
           </button>
@@ -452,11 +485,23 @@ function App() {
           Clicks Multiplier:{' '}
           <NumericDisplay value={clicksMultiplier} shortForm={false} />
           <br />
-          {/*upgrade clicker bonus*/}
+          {/*upgrade clicks multiplier*/}
           <button onClick={() => upgradeClicksMultiplier()}>
             Upgrade Clicks Multiplier
           </button>
           <CostDisplay cost={1e6 * Math.pow(10, clicksMultiplier - 1)} />
+        </td>
+      </tr>
+      <tr>
+        <td>
+          Total Upgrades Multiplier:{' '}
+          <NumericDisplay value={totalUpgradesMultiplier} shortForm={false} />
+          <br />
+          {/*upgrade total upgrades multiplier*/}
+          <button onClick={() => upgradeTotalUpgradesMultiplier()}>
+            Upgrade Total Upgrades Multiplier
+          </button>
+          <CostDisplay cost={5e4 * Math.pow(10, totalUpgradesMultiplier)} />
         </td>
       </tr>
       <table>
