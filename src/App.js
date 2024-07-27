@@ -107,6 +107,8 @@ function App() {
     //add points from clicking a button
     setPoints((prevPoints) => prevPoints + clickMultiplier); //increase points by 1 when button clicked
     setClicks((prevClicks) => prevClicks + 1); //increase clicks made by 1
+    updateClickers(); //update clickers value
+    updateAutoClickers(); //update auto clickers value
   }
   function upgradeClicker() {
     //upgrade clicker (points per click)
@@ -349,21 +351,21 @@ function App() {
       <p>Click the button to add points!</p>
       {/*display current points value*/}
       <p>
-        Points:{" "}
+        Points:{' '}
         <span id="points-display">
           <NumericDisplay value={points} />
         </span>
       </p>
       {/*display points per click value*/}
       <p>
-        Points per click:{" "}
+        Points per click:{' '}
         <span id="points-display">
           <NumericDisplay value={clickMultiplier} />
         </span>
       </p>
       {/*display points per second value*/}
       <p>
-        Points per second:{" "}
+        Points per second:{' '}
         <span id="points-display">
           <NumericDisplay value={pointsPerSecond} />
         </span>
@@ -373,7 +375,7 @@ function App() {
       <br />
       <tr>
         <td>
-          Time Multiplier Bonus:{" "}
+          Time Multiplier Bonus:{' '}
           <NumericDisplay value={timeMultiplierBonus} shortForm={false} />
           <br />
           {/*upgrade time multiplier bonus*/}
@@ -385,7 +387,7 @@ function App() {
       </tr>
       <tr>
         <td>
-          Click Multiplier Bonus:{" "}
+          Click Multiplier Bonus:{' '}
           <NumericDisplay value={clickMultiplierBonus} shortForm={false} />
           <br />
           {/*upgrade click multiplier bonus*/}
@@ -397,7 +399,7 @@ function App() {
       </tr>
       <tr>
         <td>
-          Clicker Bonus:{" "}
+          Clicker Bonus:{' '}
           <NumericDisplay value={clickerBonus} shortForm={false} />
           <br />
           {/*upgrade clicker bonus*/}
@@ -432,7 +434,7 @@ function App() {
         <tbody>
           <tr>
             <td>
-              Clicker Level:{" "}
+              Clicker Level:{' '}
               <NumericDisplay value={clickers} shortForm={false} />
               <br />
               {/*upgrade clicker (points per click)*/}
@@ -440,7 +442,7 @@ function App() {
               <CostDisplay cost={10 * Math.pow(2, clickers - 1)} />
             </td>
             <td>
-              Clicker Multiplier Level:{" "}
+              Clicker Multiplier Level:{' '}
               <NumericDisplay value={clickersMultiplier} shortForm={false} />
               <br />
               {/*upgrade clicker multiplier*/}
@@ -453,7 +455,7 @@ function App() {
           {Array.from({ length: maxLevel }, (_, i) => (
             <tr key={i + 1}>
               <td>
-                Autoclicker Level:{" "}
+                Autoclicker Level:{' '}
                 <NumericDisplay
                   value={autoClickers[i].value}
                   shortForm={false}
@@ -470,7 +472,7 @@ function App() {
                 />
               </td>
               <td>
-                Autoclicker Multiplier Level:{" "}
+                Autoclicker Multiplier Level:{' '}
                 <NumericDisplay
                   value={autoClickersMultiplier[i].value}
                   shortForm={false}
@@ -489,7 +491,7 @@ function App() {
                 />
               </td>
               <td>
-                Autoclicker Level Bonus:{" "}
+                Autoclicker Level Bonus:{' '}
                 <NumericDisplay
                   value={autoClickersLevelBonus[i].value}
                   shortForm={false}
@@ -508,7 +510,7 @@ function App() {
                 />
               </td>
               <td>
-                Autoclicker Bonus:{" "}
+                Autoclicker Bonus:{' '}
                 <NumericDisplay
                   value={autoClickersBonus[i].value}
                   shortForm={false}
@@ -527,7 +529,7 @@ function App() {
                 />
               </td>
               <td>
-                Autoclicker Bonus Multiplier:{" "}
+                Autoclicker Bonus Multiplier:{' '}
                 <NumericDisplay
                   value={autoClickersBonus[i].value}
                   shortForm={false}
