@@ -180,7 +180,7 @@ function App() {
         prevAutoClickersMultiplier.map((lvl) =>
           lvl.level === level
             ? Object.assign({}, lvl, {
-              value: prevAutoClickersMultiplier[0].value + 1,
+              value: prevAutoClickersMultiplier[lvl.level - 1].value + 1,
             })
             : lvl,
         ),
@@ -209,7 +209,7 @@ function App() {
         prevAutoClickersLevelBonus.map((lvl) =>
           lvl.level === level
             ? Object.assign({}, lvl, {
-              value: prevAutoClickersLevelBonus[0].value + 1,
+              value: prevAutoClickersLevelBonus[lvl.level - 1].value + 1,
             })
             : lvl,
         ),
@@ -238,7 +238,7 @@ function App() {
         prevAutoClickersBonus.map((lvl) =>
           lvl.level === level
             ? Object.assign({}, lvl, {
-              value: prevAutoClickersBonus[0].value + 1,
+              value: prevAutoClickersBonus[lvl.level - 1].value + 1,
             })
             : lvl,
         ),
@@ -267,7 +267,7 @@ function App() {
         prevAutoClickersBonusMultiplier.map((lvl) =>
           lvl.level === level
             ? Object.assign({}, lvl, {
-              value: prevAutoClickersBonusMultiplier[0].value + 1,
+              value: prevAutoClickersBonusMultiplier[lvl.level - 1].value + 1,
             })
             : lvl,
         ),
