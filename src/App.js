@@ -26,7 +26,9 @@ function App() {
   const [clickMultiplierBonus, setClickMultiplierBonus] = useState(0); //set initial click multiplier bonus to 0
   const [clickerBonus, setClickerBonus] = useState(0); //set initial clicker bonus to 0
   const [clickers, setClickers] = useState(1); //set initial clickers to 1
+  const [clicksMultiplier, setClicksMultiplier] = useState(1); //set clicks multiplier to 1
   const [seconds, setSeconds] = useState(0); //set initial seconds played to 0
+  const [secondsMultiplier, setSecondsMultiplier] = useState(1); //set clicks multiplier to 1
   const updateClickers = useCallback(() => {
     //update click multiplier for clickers
     setClickMultiplier(
@@ -83,14 +85,14 @@ function App() {
     const interval = setInterval(() => {
       //increase points every second
       setPoints((prevPoints) => prevPoints + pointsPerSecond); //increase points by points per second
-      setSeconds((prevSeconds) => prevSeconds + 1); //add 1 second
+      setSeconds((prevSeconds) => prevSeconds + secondsMultiplier); //add seconds by seconds multiplier
       updateClickers(); //update clickers value
       updateAutoClickers(); //update auto clickers value
     }, 1000);
     return () => {
       clearInterval(interval); //clear interval when component unmounts
     };
-  }, [pointsPerSecond, updateAutoClickers, updateClickers]);
+  }, [pointsPerSecond, secondsMultiplier, updateAutoClickers, updateClickers]);
 
   function checkPointsForUpgrade(points, pointsRequired) {
     //check if user has enough points to upgrade
@@ -106,7 +108,7 @@ function App() {
   function addPointsFromClick() {
     //add points from clicking a button
     setPoints((prevPoints) => prevPoints + clickMultiplier); //increase points by 1 when button clicked
-    setClicks((prevClicks) => prevClicks + 1); //increase clicks made by 1
+    setClicks((prevClicks) => prevClicks + clicksMultiplier); //increase clicks made by clicks multiplier
     updateClickers(); //update clickers value
     updateAutoClickers(); //update auto clickers value
   }
@@ -340,6 +342,30 @@ function App() {
       setMaxLevel((prevMaxLevel) => prevMaxLevel + 1); //increase max level by 1
     }
   }
+  function upgradeSecondsMultiplier() {
+    //upgrade seconds multiplier
+    if (
+      checkPointsForUpgrade(points, 1e5 * Math.pow(10, secondsMultiplier - 1))
+    ) {
+      setPoints(
+        (prevPoints) => prevPoints - 1e5 * Math.pow(10, secondsMultiplier - 1),
+      );
+      setSecondsMultiplier(
+        (prevSecondsMultiplier) => prevSecondsMultiplier + 1,
+      ); //increase seconds multiplier by 1
+    }
+  }
+  function upgradeClicksMultiplier() {
+    //upgrade clicks multiplier
+    if (
+      checkPointsForUpgrade(points, 1e6 * Math.pow(10, clicksMultiplier - 1))
+    ) {
+      setPoints(
+        (prevPoints) => prevPoints - 1e6 * Math.pow(10, clicksMultiplier - 1),
+      );
+      setClicksMultiplier((prevClicksMultiplier) => prevClicksMultiplier + 1); //increase clicks multiplier by 1
+    }
+  }
   return (
     //dynamic app HTML output
     <div className="App">
@@ -407,6 +433,30 @@ function App() {
             Upgrade Clicker Bonus
           </button>
           <CostDisplay cost={1e3 * Math.pow(10, clickerBonus)} />
+        </td>
+      </tr>
+      <tr>
+        <td>
+          Seconds Multiplier:{' '}
+          <NumericDisplay value={secondsMultiplier} shortForm={false} />
+          <br />
+          {/*upgrade clicker bonus*/}
+          <button onClick={() => upgradeSecondsMultiplier()}>
+            Upgrade Seconds Multiplier
+          </button>
+          <CostDisplay cost={1e5 * Math.pow(10, secondsMultiplier - 1)} />
+        </td>
+      </tr>
+      <tr>
+        <td>
+          Clicks Multiplier:{' '}
+          <NumericDisplay value={clicksMultiplier} shortForm={false} />
+          <br />
+          {/*upgrade clicker bonus*/}
+          <button onClick={() => upgradeClicksMultiplier()}>
+            Upgrade Clicks Multiplier
+          </button>
+          <CostDisplay cost={1e6 * Math.pow(10, clicksMultiplier - 1)} />
         </td>
       </tr>
       <table>
