@@ -52,12 +52,12 @@ function App() {
         ? 0
         : Math.floor(
           Math.cbrt(
-            3 * totalUpgradeLevelXp +
-            Math.sqrt(9 * totalUpgradeLevelXp ** 2 - 1 / 27),
+            3 * (totalUpgradeLevelXp + 0.5) +
+            Math.sqrt(9 * (totalUpgradeLevelXp + 0.5) ** 2 - 1 / 27),
           ) +
           Math.cbrt(
-            3 * totalUpgradeLevelXp -
-            Math.sqrt(9 * totalUpgradeLevelXp ** 2 - 1 / 27),
+            3 * (totalUpgradeLevelXp + 0.5) -
+            Math.sqrt(9 * (totalUpgradeLevelXp + 0.5) ** 2 - 1 / 27),
           ) -
           1,
         ); //calculate level based on total upgrade level XP
