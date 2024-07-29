@@ -694,7 +694,7 @@ function App() {
   }
   function upgradeMaxLevel() {
     //upgrade max level
-    if (checkPointsForUpgrade(points, 100 * Math.pow(10, maxLevel - 1))) {
+    if (points > 100 * Math.pow(10, maxLevel - 1)) {
       setAutoClickers((prevAutoClickers) => [
         ...prevAutoClickers,
         { value: 0, level: maxLevel + 1 },
@@ -1091,7 +1091,7 @@ function App() {
               <td>
                 Autoclicker Bonus Multiplier:{' '}
                 <NumericDisplay
-                  value={autoClickersBonus[i].value}
+                  value={autoClickersBonusMultiplier[i].value}
                   shortForm={false}
                 />
                 <br />
