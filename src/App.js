@@ -9,104 +9,156 @@ import {
 function App() {
   //app component
   const [points, setPoints] = useState(
-    JSON.parse(localStorage.getItem('gameState')).points || 0,
+    JSON.parse(localStorage.getItem('gameState'))
+      ? JSON.parse(localStorage.getItem('gameState')).points
+      : 0,
   ); //set initial points to 0
   const [pointsPerSecond, setPointsPerSecond] = useState(
-    JSON.parse(localStorage.getItem('gameState')).pointsPerSecond || 0,
+    JSON.parse(localStorage.getItem('gameState'))
+      ? JSON.parse(localStorage.getItem('gameState')).pointsPerSecond
+      : 0,
   ); //set initial points per second to 0
   const [maxLevel, setMaxLevel] = useState(
-    JSON.parse(localStorage.getItem('gameState')).maxLevel || 1,
+    JSON.parse(localStorage.getItem('gameState'))
+      ? JSON.parse(localStorage.getItem('gameState')).maxLevel
+      : 1,
   ); //set max level to 1
   const [autoClickers, setAutoClickers] = useState(
-    JSON.parse(localStorage.getItem('gameState')).autoClickers || [
-      { value: 0, level: 1 },
-    ],
+    JSON.parse(localStorage.getItem('gameState'))
+      ? JSON.parse(localStorage.getItem('gameState')).autoClickers
+      : [{ value: 0, level: 1 }],
   ); //set initial auto clickers to 0
   const [autoClickersMultiplier, setAutoClickersMultiplier] = useState(
-    JSON.parse(localStorage.getItem('gameState')).autoClickersMultiplier || [
-      { value: 1, level: 1 },
-    ],
+    JSON.parse(localStorage.getItem('gameState'))
+      ? JSON.parse(localStorage.getItem('gameState')).autoClickersMultiplier
+      : [{ value: 1, level: 1 }],
   ); //set initial auto clickers multiplier to 1
   const [autoClickersLevelBonus, setAutoClickersLevelBonus] = useState(
-    JSON.parse(localStorage.getItem('gameState')).autoClickersLevelBonus || [
-      { value: 0, level: 1 },
-    ],
+    JSON.parse(localStorage.getItem('gameState'))
+      ? JSON.parse(localStorage.getItem('gameState')).autoClickersLevelBonus
+      : [{ value: 0, level: 1 }],
   ); //set initial auto clickers level bonus to 0
   const [autoClickersBonus, setAutoClickersBonus] = useState(
-    JSON.parse(localStorage.getItem('gameState')).autoClickersBonus || [
-      { value: 0, level: 1 },
-    ],
+    JSON.parse(localStorage.getItem('gameState'))
+      ? JSON.parse(localStorage.getItem('gameState')).autoClickersBonus
+      : [{ value: 0, level: 1 }],
   ); //set initial auto clickers bonus to 0
   const [autoClickersBonusMultiplier, setAutoClickersBonusMultiplier] =
     useState(
       JSON.parse(localStorage.getItem('gameState'))
-        .autoClickersBonusMultiplier || [{ value: 0, level: 1 }],
+        ? JSON.parse(localStorage.getItem('gameState'))
+          .autoClickersBonusMultiplier
+        : [{ value: 0, level: 1 }],
     ); //set initial auto clickers bonus multiplier to 0
   const [clicks, setClicks] = useState(
-    JSON.parse(localStorage.getItem('gameState')).clicks || 0,
+    JSON.parse(localStorage.getItem('gameState'))
+      ? JSON.parse(localStorage.getItem('gameState')).clicks
+      : 0,
   ); //set initial clicks pressed to 0
   const [clickMultiplier, setClickMultiplier] = useState(
-    JSON.parse(localStorage.getItem('gameState')).clickMultiplier || 1,
+    JSON.parse(localStorage.getItem('gameState'))
+      ? JSON.parse(localStorage.getItem('gameState')).clickMultiplier
+      : 1,
   ); //set initial click multiplier to 1
   const [clickersMultiplier, setClickersMultiplier] = useState(
-    JSON.parse(localStorage.getItem('gameState')).clickersMultiplier || 1,
+    JSON.parse(localStorage.getItem('gameState'))
+      ? JSON.parse(localStorage.getItem('gameState')).clickersMultiplier
+      : 1,
   ); //set initial clickers multiplier to 1
   const [timeMultiplierBonus, setTimeMultiplierBonus] = useState(
-    JSON.parse(localStorage.getItem('gameState')).timeMultiplierBonus || 0,
+    JSON.parse(localStorage.getItem('gameState'))
+      ? JSON.parse(localStorage.getItem('gameState')).timeMultiplierBonus
+      : 0,
   ); //set initial time multiplier bonus to 0
   const [clickMultiplierBonus, setClickMultiplierBonus] = useState(
-    JSON.parse(localStorage.getItem('gameState')).clickMultiplierBonus || 0,
+    JSON.parse(localStorage.getItem('gameState'))
+      ? JSON.parse(localStorage.getItem('gameState')).clickMultiplierBonus
+      : 0,
   ); //set initial click multiplier bonus to 0
   const [clickerBonus, setClickerBonus] = useState(
-    JSON.parse(localStorage.getItem('gameState')).clickerBonus || 0,
+    JSON.parse(localStorage.getItem('gameState'))
+      ? JSON.parse(localStorage.getItem('gameState')).clickerBonus
+      : 0,
   ); //set initial clicker bonus to 0
   const [clickers, setClickers] = useState(
-    JSON.parse(localStorage.getItem('gameState')).clickers || 1,
+    JSON.parse(localStorage.getItem('gameState'))
+      ? JSON.parse(localStorage.getItem('gameState')).clickers
+      : 1,
   ); //set initial clickers to 1
   const [clicksMultiplier, setClicksMultiplier] = useState(
-    JSON.parse(localStorage.getItem('gameState')).clicksMultiplier || 1,
+    JSON.parse(localStorage.getItem('gameState'))
+      ? JSON.parse(localStorage.getItem('gameState')).clicksMultiplier
+      : 1,
   ); //set initial clicks multiplier to 1
   const [seconds, setSeconds] = useState(
-    JSON.parse(localStorage.getItem('gameState')).seconds || 0,
+    JSON.parse(localStorage.getItem('gameState'))
+      ? JSON.parse(localStorage.getItem('gameState')).seconds
+      : 0,
   ); //set initial seconds played to 0
   const [secondsMultiplier, setSecondsMultiplier] = useState(
-    JSON.parse(localStorage.getItem('gameState')).secondsMultiplier || 1,
+    JSON.parse(localStorage.getItem('gameState'))
+      ? JSON.parse(localStorage.getItem('gameState')).secondsMultiplier
+      : 1,
   ); //set initial clicks multiplier to 1
   const [totalUpgrades, setTotalUpgrades] = useState(
-    JSON.parse(localStorage.getItem('gameState')).totalUpgrades || 0,
+    JSON.parse(localStorage.getItem('gameState'))
+      ? JSON.parse(localStorage.getItem('gameState')).totalUpgrades
+      : 0,
   ); //set initial total upgrades to 0
   const [totalUpgradesMultiplier, setTotalUpgradesMultiplier] = useState(
-    JSON.parse(localStorage.getItem('gameState')).totalUpgradesMultiplier || 0,
+    JSON.parse(localStorage.getItem('gameState'))
+      ? JSON.parse(localStorage.getItem('gameState')).totalUpgradesMultiplier
+      : 0,
   ); //set initial total upgrades multiplier to 0
   const [upgradeLevel, setUpgradeLevel] = useState(
-    JSON.parse(localStorage.getItem('gameState')).upgradeLevel || 0,
+    JSON.parse(localStorage.getItem('gameState'))
+      ? JSON.parse(localStorage.getItem('gameState')).upgradeLevel
+      : 0,
   ); //set initial upgrade level to 0
   const [totalUpgradeLevelXp, setTotalUpgradeLevelXp] = useState(
-    JSON.parse(localStorage.getItem('gameState')).totalUpgradeLevelXp || 0,
+    JSON.parse(localStorage.getItem('gameState'))
+      ? JSON.parse(localStorage.getItem('gameState')).totalUpgradeLevelXp
+      : 0,
   ); //set initial total upgrade level XP to 0
   const [upgradeLevelXp, setUpgradeLevelXp] = useState(
-    JSON.parse(localStorage.getItem('gameState')).upgradeLevelXp || 0,
+    JSON.parse(localStorage.getItem('gameState'))
+      ? JSON.parse(localStorage.getItem('gameState')).upgradeLevelXp
+      : 0,
   ); //set initial upgrade level XP to 1
   const [upgradeLevelXpRequired, setUpgradeLevelXpRequired] = useState(
-    JSON.parse(localStorage.getItem('gameState')).upgradeLevelXpRequired || 1,
+    JSON.parse(localStorage.getItem('gameState'))
+      ? JSON.parse(localStorage.getItem('gameState')).upgradeLevelXpRequired
+      : 1,
   ); //set initial upgrade level XP required to 1
   const [upgradeLevelMultiplier, setUpgradeLevelMultiplier] = useState(
-    JSON.parse(localStorage.getItem('gameState')).upgradeLevelMultiplier || 0,
+    JSON.parse(localStorage.getItem('gameState'))
+      ? JSON.parse(localStorage.getItem('gameState')).upgradeLevelMultiplier
+      : 0,
   ); //set initial upgrade level multiplier to 0
   const [logLevel, setLogLevel] = useState(
-    JSON.parse(localStorage.getItem('gameState')).logLevel || 0,
+    JSON.parse(localStorage.getItem('gameState'))
+      ? JSON.parse(localStorage.getItem('gameState')).logLevel
+      : 0,
   ); //set initial log level to 0
   const [totalLogLevelXp, setTotalLogLevelXp] = useState(
-    JSON.parse(localStorage.getItem('gameState')).totalLogLevelXp || 0,
+    JSON.parse(localStorage.getItem('gameState'))
+      ? JSON.parse(localStorage.getItem('gameState')).totalLogLevelXp
+      : 0,
   ); //set initial total log level XP to 0
   const [logLevelXp, setLogLevelXp] = useState(
-    JSON.parse(localStorage.getItem('gameState')).logLevelXp || 0,
+    JSON.parse(localStorage.getItem('gameState'))
+      ? JSON.parse(localStorage.getItem('gameState')).logLevelXp
+      : 0,
   ); //set initial log level XP to 0
   const [logLevelXpRequired, setLogLevelXpRequired] = useState(
-    JSON.parse(localStorage.getItem('gameState')).logLevelXpRequired || 1,
+    JSON.parse(localStorage.getItem('gameState'))
+      ? JSON.parse(localStorage.getItem('gameState')).logLevelXpRequired
+      : 1,
   ); //set initial log level XP required to 1
   const [logLevelMultiplier, setLogLevelMultiplier] = useState(
-    JSON.parse(localStorage.getItem('gameState')).logLevelMultiplier || 0,
+    JSON.parse(localStorage.getItem('gameState'))
+      ? JSON.parse(localStorage.getItem('gameState')).logLevelMultiplier
+      : 0,
   ); //set initial log level multiplier to 0
   const [gameState, setGameState] = useState({
     points: points,
