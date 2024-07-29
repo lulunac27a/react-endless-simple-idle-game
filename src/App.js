@@ -884,7 +884,7 @@ function App() {
           <NumericDisplay value={totalUpgradesMultiplier} shortForm={false} />
           <br />
           +0.1% points per second bonus per total upgrades multiplier per total
-          upgradedes level
+          upgrades level
           {/*upgrade total upgrades multiplier*/}
           <button onClick={() => upgradeTotalUpgradesMultiplier()}>
             Upgrade Total Upgrades Multiplier
