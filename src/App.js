@@ -8,43 +8,205 @@ import {
 } from 'react-circular-progressbar';
 function App() {
   //app component
-  const [points, setPoints] = useState(0); //set initial points to 0
-  const [pointsPerSecond, setPointsPerSecond] = useState(0); //set initial points per second to 0
-  const [maxLevel, setMaxLevel] = useState(1); //set max level to 1
-  const [autoClickers, setAutoClickers] = useState([{ value: 0, level: 1 }]); //set initial auto clickers to 0
-  const [autoClickersMultiplier, setAutoClickersMultiplier] = useState([
-    { value: 1, level: 1 },
-  ]); //set initial auto clickers multiplier to 1
-  const [autoClickersLevelBonus, setAutoClickersLevelBonus] = useState([
-    { value: 0, level: 1 },
-  ]); //set initial auto clickers level bonus to 0
-  const [autoClickersBonus, setAutoClickersBonus] = useState([
-    { value: 0, level: 1 },
-  ]); //set initial auto clickers bonus to 0
+  const [points, setPoints] = useState(
+    JSON.parse(localStorage.getItem('gameState')).points || 0,
+  ); //set initial points to 0
+  const [pointsPerSecond, setPointsPerSecond] = useState(
+    JSON.parse(localStorage.getItem('gameState')).pointsPerSecond || 0,
+  ); //set initial points per second to 0
+  const [maxLevel, setMaxLevel] = useState(
+    JSON.parse(localStorage.getItem('gameState')).maxLevel || 1,
+  ); //set max level to 1
+  const [autoClickers, setAutoClickers] = useState(
+    JSON.parse(localStorage.getItem('gameState')).autoClickers || [
+      { value: 0, level: 1 },
+    ],
+  ); //set initial auto clickers to 0
+  const [autoClickersMultiplier, setAutoClickersMultiplier] = useState(
+    JSON.parse(localStorage.getItem('gameState')).autoClickersMultiplier || [
+      { value: 1, level: 1 },
+    ],
+  ); //set initial auto clickers multiplier to 1
+  const [autoClickersLevelBonus, setAutoClickersLevelBonus] = useState(
+    JSON.parse(localStorage.getItem('gameState')).autoClickersLevelBonus || [
+      { value: 0, level: 1 },
+    ],
+  ); //set initial auto clickers level bonus to 0
+  const [autoClickersBonus, setAutoClickersBonus] = useState(
+    JSON.parse(localStorage.getItem('gameState')).autoClickersBonus || [
+      { value: 0, level: 1 },
+    ],
+  ); //set initial auto clickers bonus to 0
   const [autoClickersBonusMultiplier, setAutoClickersBonusMultiplier] =
-    useState([{ value: 0, level: 1 }]); //set initial auto clickers bonus multiplier to 0
-  const [clicks, setClicks] = useState(0); //set initial clicks pressed to 0
-  const [clickMultiplier, setClickMultiplier] = useState(1); //set initial click multiplier to 1
-  const [clickersMultiplier, setClickersMultiplier] = useState(1); //set initial clickers multiplier to 1
-  const [timeMultiplierBonus, setTimeMultiplierBonus] = useState(0); //set initial time multiplier bonus to 0
-  const [clickMultiplierBonus, setClickMultiplierBonus] = useState(0); //set initial click multiplier bonus to 0
-  const [clickerBonus, setClickerBonus] = useState(0); //set initial clicker bonus to 0
-  const [clickers, setClickers] = useState(1); //set initial clickers to 1
-  const [clicksMultiplier, setClicksMultiplier] = useState(1); //set initial clicks multiplier to 1
-  const [seconds, setSeconds] = useState(0); //set initial seconds played to 0
-  const [secondsMultiplier, setSecondsMultiplier] = useState(1); //set initial clicks multiplier to 1
-  const [totalUpgrades, setTotalUpgrades] = useState(0); //set initial total upgrades to 0
-  const [totalUpgradesMultiplier, setTotalUpgradesMultiplier] = useState(0); //set initial total upgrades multiplier to 0
-  const [upgradeLevel, setUpgradeLevel] = useState(1); //set initial upgrade level to 1
-  const [totalUpgradeLevelXp, setTotalUpgradeLevelXp] = useState(0); //set initial total upgrade level XP to 0
-  const [upgradeLevelXp, setUpgradeLevelXp] = useState(0); //set initial upgrade level XP to 1
-  const [upgradeLevelXpRequired, setUpgradeLevelXpRequired] = useState(1); //set initial upgrade level XP required to 1
-  const [upgradeLevelMultiplier, setUpgradeLevelMultiplier] = useState(0); //set initial upgrade level multiplier to 0
-  const [logLevel, setLogLevel] = useState(1); //set initial log level to 1
-  const [totalLogLevelXp, setTotalLogLevelXp] = useState(0); //set initial total log level XP to 0
-  const [logLevelXp, setLogLevelXp] = useState(0); //set initial log level XP to 0
-  const [logLevelXpRequired, setLogLevelXpRequired] = useState(1); //set initial log level XP required to 1
-  const [logLevelMultiplier, setLogLevelMultiplier] = useState(0); //set initial log level multiplier to 0
+    useState(
+      JSON.parse(localStorage.getItem('gameState'))
+        .autoClickersBonusMultiplier || [{ value: 0, level: 1 }],
+    ); //set initial auto clickers bonus multiplier to 0
+  const [clicks, setClicks] = useState(
+    JSON.parse(localStorage.getItem('gameState')).clicks || 0,
+  ); //set initial clicks pressed to 0
+  const [clickMultiplier, setClickMultiplier] = useState(
+    JSON.parse(localStorage.getItem('gameState')).clickMultiplier || 1,
+  ); //set initial click multiplier to 1
+  const [clickersMultiplier, setClickersMultiplier] = useState(
+    JSON.parse(localStorage.getItem('gameState')).clickersMultiplier || 1,
+  ); //set initial clickers multiplier to 1
+  const [timeMultiplierBonus, setTimeMultiplierBonus] = useState(
+    JSON.parse(localStorage.getItem('gameState')).timeMultiplierBonus || 0,
+  ); //set initial time multiplier bonus to 0
+  const [clickMultiplierBonus, setClickMultiplierBonus] = useState(
+    JSON.parse(localStorage.getItem('gameState')).clickMultiplierBonus || 0,
+  ); //set initial click multiplier bonus to 0
+  const [clickerBonus, setClickerBonus] = useState(
+    JSON.parse(localStorage.getItem('gameState')).clickerBonus || 0,
+  ); //set initial clicker bonus to 0
+  const [clickers, setClickers] = useState(
+    JSON.parse(localStorage.getItem('gameState')).clickers || 1,
+  ); //set initial clickers to 1
+  const [clicksMultiplier, setClicksMultiplier] = useState(
+    JSON.parse(localStorage.getItem('gameState')).clicksMultiplier || 1,
+  ); //set initial clicks multiplier to 1
+  const [seconds, setSeconds] = useState(
+    JSON.parse(localStorage.getItem('gameState')).seconds || 0,
+  ); //set initial seconds played to 0
+  const [secondsMultiplier, setSecondsMultiplier] = useState(
+    JSON.parse(localStorage.getItem('gameState')).secondsMultiplier || 1,
+  ); //set initial clicks multiplier to 1
+  const [totalUpgrades, setTotalUpgrades] = useState(
+    JSON.parse(localStorage.getItem('gameState')).totalUpgrades || 0,
+  ); //set initial total upgrades to 0
+  const [totalUpgradesMultiplier, setTotalUpgradesMultiplier] = useState(
+    JSON.parse(localStorage.getItem('gameState')).totalUpgradesMultiplier || 0,
+  ); //set initial total upgrades multiplier to 0
+  const [upgradeLevel, setUpgradeLevel] = useState(
+    JSON.parse(localStorage.getItem('gameState')).upgradeLevel || 1,
+  ); //set initial upgrade level to 1
+  const [totalUpgradeLevelXp, setTotalUpgradeLevelXp] = useState(
+    JSON.parse(localStorage.getItem('gameState')).totalUpgradeLevelXp || 0,
+  ); //set initial total upgrade level XP to 0
+  const [upgradeLevelXp, setUpgradeLevelXp] = useState(
+    JSON.parse(localStorage.getItem('gameState')).upgradeLevelXp || 0,
+  ); //set initial upgrade level XP to 1
+  const [upgradeLevelXpRequired, setUpgradeLevelXpRequired] = useState(
+    JSON.parse(localStorage.getItem('gameState')).upgradeLevelXpRequired || 1,
+  ); //set initial upgrade level XP required to 1
+  const [upgradeLevelMultiplier, setUpgradeLevelMultiplier] = useState(
+    JSON.parse(localStorage.getItem('gameState')).upgradeLevelMultiplier || 0,
+  ); //set initial upgrade level multiplier to 0
+  const [logLevel, setLogLevel] = useState(
+    JSON.parse(localStorage.getItem('gameState')).logLevel || 1,
+  ); //set initial log level to 1
+  const [totalLogLevelXp, setTotalLogLevelXp] = useState(
+    JSON.parse(localStorage.getItem('gameState')).totalLogLevelXp || 0,
+  ); //set initial total log level XP to 0
+  const [logLevelXp, setLogLevelXp] = useState(
+    JSON.parse(localStorage.getItem('gameState')).logLevelXp || 0,
+  ); //set initial log level XP to 0
+  const [logLevelXpRequired, setLogLevelXpRequired] = useState(
+    JSON.parse(localStorage.getItem('gameState')).logLevelXpRequired || 1,
+  ); //set initial log level XP required to 1
+  const [logLevelMultiplier, setLogLevelMultiplier] = useState(
+    JSON.parse(localStorage.getItem('gameState')).logLevelMultiplier || 0,
+  ); //set initial log level multiplier to 0
+  const [gameState, setGameState] = useState({
+    points: points,
+    pointsPerSecond: pointsPerSecond,
+    maxLevel: maxLevel,
+    autoClickers: autoClickers,
+    autoClickersMultiplier: autoClickersMultiplier,
+    autoClickersLevelBonus: autoClickersLevelBonus,
+    autoClickersBonus: autoClickersBonus,
+    autoClickersBonusMultiplier: autoClickersBonusMultiplier,
+    clicks: clicks,
+    clickMultiplier: clickMultiplier,
+    clickersMultiplier: clickersMultiplier,
+    timeMultiplierBonus: timeMultiplierBonus,
+    clickMultiplierBonus: clickMultiplierBonus,
+    clickerBonus: clickerBonus,
+    clickers: clickers,
+    clicksMultiplier: clicksMultiplier,
+    seconds: seconds,
+    secondsMultiplier: secondsMultiplier,
+    totalUpgrades: totalUpgrades,
+    totalUpgradesMultiplier: totalUpgradesMultiplier,
+    upgradeLevel: upgradeLevel,
+    totalUpgradeLevelXp: totalUpgradeLevelXp,
+    upgradeLevelXp: upgradeLevelXp,
+    upgradeLevelXpRequired: upgradeLevelXpRequired,
+    upgradeLevelMultiplier: upgradeLevelMultiplier,
+    logLevel: logLevel,
+    totalLogLevelXp: totalLogLevelXp,
+    logLevelXp: logLevelXp,
+    logLevelXpRequired: logLevelXpRequired,
+    logLevelMultiplier: logLevelMultiplier,
+  }); //set game state data
+  const updateGameState = useCallback(() => {
+    setGameState({
+      points: points,
+      pointsPerSecond: pointsPerSecond,
+      maxLevel: maxLevel,
+      autoClickers: autoClickers,
+      autoClickersMultiplier: autoClickersMultiplier,
+      autoClickersLevelBonus: autoClickersLevelBonus,
+      autoClickersBonus: autoClickersBonus,
+      autoClickersBonusMultiplier: autoClickersBonusMultiplier,
+      clicks: clicks,
+      clickMultiplier: clickMultiplier,
+      clickersMultiplier: clickersMultiplier,
+      timeMultiplierBonus: timeMultiplierBonus,
+      clickMultiplierBonus: clickMultiplierBonus,
+      clickerBonus: clickerBonus,
+      clickers: clickers,
+      clicksMultiplier: clicksMultiplier,
+      seconds: seconds,
+      secondsMultiplier: secondsMultiplier,
+      totalUpgrades: totalUpgrades,
+      totalUpgradesMultiplier: totalUpgradesMultiplier,
+      upgradeLevel: upgradeLevel,
+      totalUpgradeLevelXp: totalUpgradeLevelXp,
+      upgradeLevelXp: upgradeLevelXp,
+      upgradeLevelXpRequired: upgradeLevelXpRequired,
+      upgradeLevelMultiplier: upgradeLevelMultiplier,
+      logLevel: logLevel,
+      totalLogLevelXp: totalLogLevelXp,
+      logLevelXp: logLevelXp,
+      logLevelXpRequired: logLevelXpRequired,
+      logLevelMultiplier: logLevelMultiplier,
+    }); //set game state data
+    localStorage.setItem('gameState', JSON.stringify(gameState)); //save game state data to local storage
+  }, [
+    autoClickers,
+    autoClickersBonus,
+    autoClickersBonusMultiplier,
+    autoClickersLevelBonus,
+    autoClickersMultiplier,
+    clickMultiplier,
+    clickMultiplierBonus,
+    clickerBonus,
+    clickers,
+    clickersMultiplier,
+    clicks,
+    clicksMultiplier,
+    gameState,
+    logLevel,
+    logLevelMultiplier,
+    logLevelXp,
+    logLevelXpRequired,
+    maxLevel,
+    points,
+    pointsPerSecond,
+    seconds,
+    secondsMultiplier,
+    timeMultiplierBonus,
+    totalLogLevelXp,
+    totalUpgradeLevelXp,
+    totalUpgrades,
+    totalUpgradesMultiplier,
+    upgradeLevel,
+    upgradeLevelMultiplier,
+    upgradeLevelXp,
+    upgradeLevelXpRequired,
+  ]);
   const checkUpgradeLevel = useCallback(() => {
     //check if upgrade level XP is higher than or equal to XP required
     const upgradeLevelExpected =
@@ -164,11 +326,18 @@ function App() {
       setSeconds((prevSeconds) => prevSeconds + secondsMultiplier); //add seconds by seconds multiplier
       updateClickers(); //update clickers value
       updateAutoClickers(); //update auto clickers value
+      updateGameState(); //update game state data
     }, 1000);
     return () => {
       clearInterval(interval); //clear interval when component unmounts
     };
-  }, [pointsPerSecond, secondsMultiplier, updateAutoClickers, updateClickers]);
+  }, [
+    pointsPerSecond,
+    secondsMultiplier,
+    updateAutoClickers,
+    updateClickers,
+    updateGameState,
+  ]);
 
   function checkPointsForUpgrade(points, pointsRequired) {
     //check if user has enough points to upgrade
@@ -180,6 +349,7 @@ function App() {
       ); //increase log level XP
       checkLogLevel(); //check if log level has enough XP to level up
       checkUpgradeLevel(); //check if upgrade level has enough XP to level up
+      updateGameState(); //update game state data
       return true;
     } else {
       //not enough points required to upgrade
@@ -193,6 +363,7 @@ function App() {
     setClicks((prevClicks) => prevClicks + clicksMultiplier); //increase clicks made by clicks multiplier
     updateClickers(); //update clickers value
     updateAutoClickers(); //update auto clickers value
+    updateGameState(); //update game state data
   }
   function upgradeClicker() {
     //upgrade clicker (points per click)
@@ -205,6 +376,7 @@ function App() {
       setClickers((prevClickers) => prevClickers + 1); //increase clickers by 1
       updateClickers(); //update clickers value
       setTotalUpgrades((prevTotalUpgrades) => prevTotalUpgrades + 1); //increase total upgrades by 1
+      updateGameState(); //update game state data
     }
   }
   function upgradeClickerMultiplier() {
@@ -225,6 +397,7 @@ function App() {
       ); //increase clickers multiplier by 1
       updateClickers(); //update clickers value
       setTotalUpgrades((prevTotalUpgrades) => prevTotalUpgrades + 1); //increase total upgrades by 1
+      updateGameState(); //update game state data
     }
   }
   function upgradeAutoClicker(level) {
@@ -260,6 +433,7 @@ function App() {
       ); //increase autoclickers by 1
       updateAutoClickers(); //update auto clickers value
       setTotalUpgrades((prevTotalUpgrades) => prevTotalUpgrades + 1); //increase total upgrades by 1
+      updateGameState(); //update game state data
     }
   }
   function upgradeAutoClickerMultiplier(level) {
@@ -296,6 +470,7 @@ function App() {
       ); //increase autoclickers multiplier by 1
       updateAutoClickers(); //update auto clickers value
       setTotalUpgrades((prevTotalUpgrades) => prevTotalUpgrades + 1); //increase total upgrades by 1
+      updateGameState(); //update game state data
     }
   }
   function upgradeAutoClickerLevelBonus(level) {
@@ -332,6 +507,7 @@ function App() {
       ); //increase autoclickers level bonus by 1
       updateAutoClickers(); //update auto clickers value
       setTotalUpgrades((prevTotalUpgrades) => prevTotalUpgrades + 1); //increase total upgrades by 1
+      updateGameState(); //update game state data
     }
   }
   function upgradeAutoClickerBonus(level) {
@@ -367,6 +543,7 @@ function App() {
       ); //increase autoclickers bonus by 1
       updateAutoClickers(); //update auto clickers value
       setTotalUpgrades((prevTotalUpgrades) => prevTotalUpgrades + 1); //increase total upgrades by 1
+      updateGameState(); //update game state data
     }
   }
   function upgradeAutoClickerBonusMultiplier(level) {
@@ -403,6 +580,7 @@ function App() {
       ); //increase autoclickers bonus multiplier by 1
       updateAutoClickers(); //update auto clickers value
       setTotalUpgrades((prevTotalUpgrades) => prevTotalUpgrades + 1); //increase total upgrades by 1
+      updateGameState(); //update game state data
     }
   }
   function upgradeTimeMultiplierBonus() {
@@ -423,6 +601,7 @@ function App() {
       ); //increase time multiplier bonus by 1
       updateAutoClickers(); //update auto clickers value
       setTotalUpgrades((prevTotalUpgrades) => prevTotalUpgrades + 1); //increase total upgrades by 1
+      updateGameState(); //update game state data
     }
   }
   function upgradeClickMultiplierBonus() {
@@ -443,6 +622,7 @@ function App() {
       ); //increase click multiplier bonus by 1
       updateAutoClickers(); //update auto clickers value
       setTotalUpgrades((prevTotalUpgrades) => prevTotalUpgrades + 1); //increase total upgrades by 1
+      updateGameState(); //update game state data
     }
   }
   function upgradeClickerBonus() {
@@ -457,6 +637,7 @@ function App() {
       setClickerBonus((prevClickerBonus) => prevClickerBonus + 1); //increase clicker bonus by 1
       updateAutoClickers(); //update auto clickers value
       setTotalUpgrades((prevTotalUpgrades) => prevTotalUpgrades + 1); //increase total upgrades by 1
+      updateGameState(); //update game state data
     }
   }
   function upgradeMaxLevel() {
@@ -483,6 +664,7 @@ function App() {
         { value: 0, level: maxLevel + 1 },
       ]);
       setMaxLevel((prevMaxLevel) => prevMaxLevel + 1); //increase max level by 1
+      updateGameState(); //update game state data
     }
   }
   function upgradeSecondsMultiplier() {
@@ -502,6 +684,7 @@ function App() {
         (prevSecondsMultiplier) => prevSecondsMultiplier + 1,
       ); //increase seconds multiplier by 1
       setTotalUpgrades((prevTotalUpgrades) => prevTotalUpgrades + 1); //increase total upgrades by 1
+      updateGameState(); //update game state data
     }
   }
   function upgradeClicksMultiplier() {
@@ -519,6 +702,7 @@ function App() {
       );
       setClicksMultiplier((prevClicksMultiplier) => prevClicksMultiplier + 1); //increase clicks multiplier by 1
       setTotalUpgrades((prevTotalUpgrades) => prevTotalUpgrades + 1); //increase total upgrades by 1
+      updateGameState(); //update game state data
     }
   }
   function upgradeTotalUpgradesMultiplier() {
@@ -539,6 +723,7 @@ function App() {
         (prevTotalUpgradesMultiplier) => prevTotalUpgradesMultiplier + 1,
       ); //increase total upgrades multiplier by 1
       setTotalUpgrades((prevTotalUpgrades) => prevTotalUpgrades + 1); //increase total upgrades by 1
+      updateGameState(); //update game state data
     }
   }
   function upgradeLevelUpgradeMultiplier() {
@@ -556,6 +741,7 @@ function App() {
       setUpgradeLevelMultiplier(
         (prevUpgradeLevelMultiplier) => prevUpgradeLevelMultiplier + 1,
       ); //increase upgrade level multiplier by 1
+      updateGameState(); //update game state data
     }
   }
   function upgradeLogLevelMultiplier() {
@@ -572,6 +758,7 @@ function App() {
       setLogLevelMultiplier(
         (prevLogLevelMultiplier) => prevLogLevelMultiplier + 1,
       ); //increase log level multiplier by 1
+      updateGameState(); //update game state data
     }
   }
 
