@@ -79,8 +79,8 @@ function App() {
     JSON.parse(localStorage.getItem('gameState')).totalUpgradesMultiplier || 0,
   ); //set initial total upgrades multiplier to 0
   const [upgradeLevel, setUpgradeLevel] = useState(
-    JSON.parse(localStorage.getItem('gameState')).upgradeLevel || 1,
-  ); //set initial upgrade level to 1
+    JSON.parse(localStorage.getItem('gameState')).upgradeLevel || 0,
+  ); //set initial upgrade level to 0
   const [totalUpgradeLevelXp, setTotalUpgradeLevelXp] = useState(
     JSON.parse(localStorage.getItem('gameState')).totalUpgradeLevelXp || 0,
   ); //set initial total upgrade level XP to 0
@@ -94,8 +94,8 @@ function App() {
     JSON.parse(localStorage.getItem('gameState')).upgradeLevelMultiplier || 0,
   ); //set initial upgrade level multiplier to 0
   const [logLevel, setLogLevel] = useState(
-    JSON.parse(localStorage.getItem('gameState')).logLevel || 1,
-  ); //set initial log level to 1
+    JSON.parse(localStorage.getItem('gameState')).logLevel || 0,
+  ); //set initial log level to 0
   const [totalLogLevelXp, setTotalLogLevelXp] = useState(
     JSON.parse(localStorage.getItem('gameState')).totalLogLevelXp || 0,
   ); //set initial total log level XP to 0
@@ -828,6 +828,8 @@ function App() {
           Time Multiplier Bonus:{' '}
           <NumericDisplay value={timeMultiplierBonus} shortForm={false} />
           <br />
+          +0.01% points per second bonus per seconds upgrade multiplier per
+          second played
           {/*upgrade time multiplier bonus*/}
           <button onClick={() => upgradeTimeMultiplierBonus()}>
             Upgrade Time Multiplier Bonus
@@ -838,6 +840,8 @@ function App() {
           Click Multiplier Bonus:{' '}
           <NumericDisplay value={clickMultiplierBonus} shortForm={false} />
           <br />
+          +0.01% points per second bonus per clicks upgrade multiplier per click
+          made
           {/*upgrade click multiplier bonus*/}
           <button onClick={() => upgradeClickMultiplierBonus()}>
             Upgrade Click Multiplier Bonus
@@ -848,6 +852,7 @@ function App() {
           Clicker Bonus:{' '}
           <NumericDisplay value={clickerBonus} shortForm={false} />
           <br />
+          +1% bonus points per second from click per clicker bonus level
           {/*upgrade clicker bonus*/}
           <button onClick={() => upgradeClickerBonus()}>
             Upgrade Clicker Bonus
@@ -878,6 +883,8 @@ function App() {
           Total Upgrades Multiplier:{' '}
           <NumericDisplay value={totalUpgradesMultiplier} shortForm={false} />
           <br />
+          +0.1% points per second bonus per total upgrades multiplier per total
+          upgradedes level
           {/*upgrade total upgrades multiplier*/}
           <button onClick={() => upgradeTotalUpgradesMultiplier()}>
             Upgrade Total Upgrades Multiplier
@@ -888,6 +895,8 @@ function App() {
           Level Upgrade Multiplier:{' '}
           <NumericDisplay value={upgradeLevelMultiplier} shortForm={false} />
           <br />
+          +1% points per second bonus per level upgrade multiplier upgrade per
+          upgrade level
           {/*upgrade level upgrades multiplier*/}
           <button onClick={() => upgradeLevelUpgradeMultiplier()}>
             Upgrade Level Upgrade Multiplier
@@ -897,6 +906,9 @@ function App() {
         <td>
           Log Level Multiplier:{' '}
           <NumericDisplay value={logLevelMultiplier} shortForm={false} />
+          <br />
+          +1% points per second bonus per log level multiplier upgrade per log
+          level
           <br />
           {/*upgrade log level multiplier*/}
           <button onClick={() => upgradeLogLevelMultiplier()}>
