@@ -21,6 +21,16 @@ function formatNumber(number = 0, shortForm = true) {
       'O',
       'N',
       'D',
+      'UD',
+      'DD',
+      'TD',
+      'QaD',
+      'QiD',
+      'SxD',
+      'SpD',
+      'OD',
+      'ND',
+      'V',
     ]; //numeric prefixes
     if (Math.abs(number) < 1000) {
       //if number is less than 1 thousand
@@ -29,8 +39,10 @@ function formatNumber(number = 0, shortForm = true) {
       //if number is 1 thousand or more
       const roundedNumber = number.toPrecision(3); //round number to 3 significant figures
       return (
-        (parseFloat(roundedNumber) / Math.pow(10, exponent3)).toPrecision(3) +
-        prefixes[exponent3 / 3]
+        Math.min(
+          999,
+          parseFloat(roundedNumber) / Math.pow(10, exponent3),
+        ).toPrecision(3) + prefixes[exponent3 / 3]
       ); //return coefficient of engineering notation with numeric prefix
     }
   } else {
