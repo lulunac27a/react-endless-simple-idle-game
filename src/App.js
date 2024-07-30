@@ -802,7 +802,7 @@ function App() {
     }
   }
   function upgradeLogLevelMultiplier() {
-    if (checkPointsForUpgrade(points, 5e5 * Math.pow(10, logLevelMultiplier))) {
+    if (checkPointsForUpgrade(points, 5e4 * Math.pow(10, logLevelMultiplier))) {
       setTotalUpgradeLevelXp(
         (prevTotalUpgradeLevelXp) =>
           prevTotalUpgradeLevelXp + (logLevelMultiplier + 1) * 5,
@@ -971,7 +971,7 @@ function App() {
           <button onClick={() => upgradeLogLevelMultiplier()}>
             Upgrade Log Level Multiplier
           </button>
-          <CostDisplay cost={5e5 * Math.pow(10, logLevelMultiplier)} />
+          <CostDisplay cost={5e4 * Math.pow(10, logLevelMultiplier)} />
         </td>
       </tr>
       <table>
