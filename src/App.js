@@ -47,7 +47,7 @@ function App() {
     useState(
       JSON.parse(localStorage.getItem('gameState'))
         ? JSON.parse(localStorage.getItem('gameState'))
-          .autoClickersBonusMultiplier
+            .autoClickersBonusMultiplier
         : [{ value: 0, level: 1 }],
     ); //set initial auto clickers bonus multiplier to 0
   const [clicks, setClicks] = useState(
@@ -265,16 +265,16 @@ function App() {
       totalUpgradeLevelXp === 0
         ? 0
         : Math.floor(
-          Math.cbrt(
-            3 * (totalUpgradeLevelXp + 0.5) +
-            Math.sqrt(9 * (totalUpgradeLevelXp + 0.5) ** 2 - 1 / 27),
-          ) +
-          Math.cbrt(
-            3 * (totalUpgradeLevelXp + 0.5) -
-            Math.sqrt(9 * (totalUpgradeLevelXp + 0.5) ** 2 - 1 / 27),
-          ) -
-          1,
-        ); //calculate level based on total upgrade level XP
+            Math.cbrt(
+              3 * (totalUpgradeLevelXp + 0.5) +
+                Math.sqrt(9 * (totalUpgradeLevelXp + 0.5) ** 2 - 1 / 27),
+            ) +
+              Math.cbrt(
+                3 * (totalUpgradeLevelXp + 0.5) -
+                  Math.sqrt(9 * (totalUpgradeLevelXp + 0.5) ** 2 - 1 / 27),
+              ) -
+              1,
+          ); //calculate level based on total upgrade level XP
     const upgradeLevelXpExpected =
       (upgradeLevelExpected *
         (upgradeLevelExpected + 1) *
@@ -292,16 +292,16 @@ function App() {
       totalLogLevelXp === 0
         ? 0
         : Math.floor(
-          Math.cbrt(
-            3 * totalLogLevelXp +
-            Math.sqrt(9 * totalLogLevelXp ** 2 - 1 / 27),
-          ) +
-          Math.cbrt(
-            3 * totalLogLevelXp -
-            Math.sqrt(9 * totalLogLevelXp ** 2 - 1 / 27),
-          ) -
-          1,
-        ); //calculate level based on total log level XP
+            Math.cbrt(
+              3 * totalLogLevelXp +
+                Math.sqrt(9 * totalLogLevelXp ** 2 - 1 / 27),
+            ) +
+              Math.cbrt(
+                3 * totalLogLevelXp -
+                  Math.sqrt(9 * totalLogLevelXp ** 2 - 1 / 27),
+              ) -
+              1,
+          ); //calculate level based on total log level XP
     const logLevelXpExpected =
       (logLevelExpected * (logLevelExpected + 1) * (logLevelExpected + 2)) / 6; //total log level XP when specified log level reached
     setLogLevel(logLevelExpected + 1); //set log level
@@ -324,33 +324,33 @@ function App() {
         (sum, clicker) =>
           sum +
           clicker.value *
-          autoClickersMultiplier[clicker.level - 1].value *
-          (1 +
-            (autoClickersLevelBonus[clicker.level - 1].value *
-              clicker.value) /
-            100) *
-          (1 +
-            (autoClickersBonus[clicker.level - 1].value *
-              (clicker.value +
-                autoClickersMultiplier[clicker.level - 1].value +
-                autoClickersLevelBonus[clicker.level - 1].value +
-                autoClickersBonus[clicker.level - 1].value +
-                autoClickersBonusMultiplier[clicker.level - 1].value)) /
-            100) *
-          (1 +
-            (autoClickersBonusMultiplier[clicker.level - 1].value *
-              (clicker.value +
-                autoClickersMultiplier[clicker.level - 1].value * 2 +
-                autoClickersLevelBonus[clicker.level - 1].value * 3 +
-                autoClickersBonus[clicker.level - 1].value * 4 +
-                autoClickersBonusMultiplier[clicker.level - 1].value * 5)) /
-            100) *
-          (1 + (timeMultiplierBonus * seconds) / 10000) *
-          (1 + (clickMultiplierBonus * clicks) / 10000) *
-          (1 + (totalUpgradesMultiplier * totalUpgrades) / 1000) *
-          (1 + (upgradeLevelMultiplier * upgradeLevel) / 100) *
-          (1 + (logLevelMultiplier * logLevel) / 100) *
-          clicker.level,
+            autoClickersMultiplier[clicker.level - 1].value *
+            (1 +
+              (autoClickersLevelBonus[clicker.level - 1].value *
+                clicker.value) /
+                100) *
+            (1 +
+              (autoClickersBonus[clicker.level - 1].value *
+                (clicker.value +
+                  autoClickersMultiplier[clicker.level - 1].value +
+                  autoClickersLevelBonus[clicker.level - 1].value +
+                  autoClickersBonus[clicker.level - 1].value +
+                  autoClickersBonusMultiplier[clicker.level - 1].value)) /
+                100) *
+            (1 +
+              (autoClickersBonusMultiplier[clicker.level - 1].value *
+                (clicker.value +
+                  autoClickersMultiplier[clicker.level - 1].value * 2 +
+                  autoClickersLevelBonus[clicker.level - 1].value * 3 +
+                  autoClickersBonus[clicker.level - 1].value * 4 +
+                  autoClickersBonusMultiplier[clicker.level - 1].value * 5)) /
+                100) *
+            (1 + (timeMultiplierBonus * seconds) / 10000) *
+            (1 + (clickMultiplierBonus * clicks) / 10000) *
+            (1 + (totalUpgradesMultiplier * totalUpgrades) / 1000) *
+            (1 + (upgradeLevelMultiplier * upgradeLevel) / 100) *
+            (1 + (logLevelMultiplier * logLevel) / 100) *
+            clicker.level,
         0,
       ),
     ); //set points per second
@@ -458,8 +458,8 @@ function App() {
       checkPointsForUpgrade(
         points,
         10 *
-        Math.pow(2, autoClickers[level - 1].value) *
-        Math.pow(10, level - 1),
+          Math.pow(2, autoClickers[level - 1].value) *
+          Math.pow(10, level - 1),
       )
     ) {
       setTotalUpgradeLevelXp(
@@ -471,15 +471,15 @@ function App() {
         (prevPoints) =>
           prevPoints -
           10 *
-          Math.pow(2, autoClickers[level - 1].value) *
-          Math.pow(10, level - 1),
+            Math.pow(2, autoClickers[level - 1].value) *
+            Math.pow(10, level - 1),
       );
       setAutoClickers((prevAutoClickers) =>
         prevAutoClickers.map((lvl) =>
           lvl.level === level
             ? Object.assign({}, lvl, {
-              value: prevAutoClickers[lvl.level - 1].value + 1,
-            })
+                value: prevAutoClickers[lvl.level - 1].value + 1,
+              })
             : lvl,
         ),
       ); //increase autoclickers by 1
@@ -494,8 +494,8 @@ function App() {
       checkPointsForUpgrade(
         points,
         100 *
-        Math.pow(2, autoClickersMultiplier[level - 1].value - 1) *
-        Math.pow(10, level - 1),
+          Math.pow(2, autoClickersMultiplier[level - 1].value - 1) *
+          Math.pow(10, level - 1),
       )
     ) {
       setTotalUpgradeLevelXp(
@@ -508,15 +508,15 @@ function App() {
         (prevPoints) =>
           prevPoints -
           100 *
-          Math.pow(2, autoClickersMultiplier[level - 1].value - 1) *
-          Math.pow(10, level - 1),
+            Math.pow(2, autoClickersMultiplier[level - 1].value - 1) *
+            Math.pow(10, level - 1),
       );
       setAutoClickersMultiplier((prevAutoClickersMultiplier) =>
         prevAutoClickersMultiplier.map((lvl) =>
           lvl.level === level
             ? Object.assign({}, lvl, {
-              value: prevAutoClickersMultiplier[lvl.level - 1].value + 1,
-            })
+                value: prevAutoClickersMultiplier[lvl.level - 1].value + 1,
+              })
             : lvl,
         ),
       ); //increase autoclickers multiplier by 1
@@ -531,8 +531,8 @@ function App() {
       checkPointsForUpgrade(
         points,
         1e3 *
-        Math.pow(2, autoClickersLevelBonus[level - 1].value) *
-        Math.pow(10, level - 1),
+          Math.pow(2, autoClickersLevelBonus[level - 1].value) *
+          Math.pow(10, level - 1),
       )
     ) {
       setTotalUpgradeLevelXp(
@@ -545,15 +545,15 @@ function App() {
         (prevPoints) =>
           prevPoints -
           1e3 *
-          Math.pow(2, autoClickersLevelBonus[level - 1].value) *
-          Math.pow(10, level - 1),
+            Math.pow(2, autoClickersLevelBonus[level - 1].value) *
+            Math.pow(10, level - 1),
       );
       setAutoClickersLevelBonus((prevAutoClickersLevelBonus) =>
         prevAutoClickersLevelBonus.map((lvl) =>
           lvl.level === level
             ? Object.assign({}, lvl, {
-              value: prevAutoClickersLevelBonus[lvl.level - 1].value + 1,
-            })
+                value: prevAutoClickersLevelBonus[lvl.level - 1].value + 1,
+              })
             : lvl,
         ),
       ); //increase autoclickers level bonus by 1
@@ -568,8 +568,8 @@ function App() {
       checkPointsForUpgrade(
         points,
         1e4 *
-        Math.pow(3, autoClickersBonus[level - 1].value) *
-        Math.pow(10, level - 1),
+          Math.pow(3, autoClickersBonus[level - 1].value) *
+          Math.pow(10, level - 1),
       )
     ) {
       setTotalUpgradeLevelXp(
@@ -581,15 +581,15 @@ function App() {
         (prevPoints) =>
           prevPoints -
           1e4 *
-          Math.pow(3, autoClickersBonus[level - 1].value) *
-          Math.pow(10, level - 1),
+            Math.pow(3, autoClickersBonus[level - 1].value) *
+            Math.pow(10, level - 1),
       );
       setAutoClickersBonus((prevAutoClickersBonus) =>
         prevAutoClickersBonus.map((lvl) =>
           lvl.level === level
             ? Object.assign({}, lvl, {
-              value: prevAutoClickersBonus[lvl.level - 1].value + 1,
-            })
+                value: prevAutoClickersBonus[lvl.level - 1].value + 1,
+              })
             : lvl,
         ),
       ); //increase autoclickers bonus by 1
@@ -604,8 +604,8 @@ function App() {
       checkPointsForUpgrade(
         points,
         1e5 *
-        Math.pow(5, autoClickersBonusMultiplier[level - 1].value) *
-        Math.pow(10, level - 1),
+          Math.pow(5, autoClickersBonusMultiplier[level - 1].value) *
+          Math.pow(10, level - 1),
       )
     ) {
       setTotalUpgradeLevelXp(
@@ -618,15 +618,15 @@ function App() {
         (prevPoints) =>
           prevPoints -
           1e5 *
-          Math.pow(5, autoClickersBonusMultiplier[level - 1].value) *
-          Math.pow(10, level - 1),
+            Math.pow(5, autoClickersBonusMultiplier[level - 1].value) *
+            Math.pow(10, level - 1),
       );
       setAutoClickersBonusMultiplier((prevAutoClickersBonusMultiplier) =>
         prevAutoClickersBonusMultiplier.map((lvl) =>
           lvl.level === level
             ? Object.assign({}, lvl, {
-              value: prevAutoClickersBonusMultiplier[lvl.level - 1].value + 1,
-            })
+                value: prevAutoClickersBonusMultiplier[lvl.level - 1].value + 1,
+              })
             : lvl,
         ),
       ); //increase autoclickers bonus multiplier by 1

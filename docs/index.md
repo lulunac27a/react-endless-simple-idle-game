@@ -1,6 +1,7 @@
 # Endless Simple Idle Game using React
 
 This app is an endless idle game written in JavaScript using React templates. You earn points when you click on the button. 
+Try it on [CodeSandbox](https://codesandbox.io/p/github/lulunac27a/react-endless-simple-idle-game/)
 
 ## Running The App
 
