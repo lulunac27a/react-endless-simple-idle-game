@@ -34,7 +34,10 @@ function formatNumber(number = 0, shortForm = true) {
     ]; //numeric prefixes
     if (Math.abs(number) < 1000) {
       //if number is less than 1 thousand
-      return Math.round(number).toString(); //return number rounded to nearest integer
+      return Math.min(
+        999,
+        Math.max(-999, Math.round(Math.abs(number) * Math.sign(number))),
+      ).toString(); //return number rounded to nearest integer
     } else {
       //if number is 1 thousand or more
       const roundedNumber = number.toPrecision(3); //round number to 3 significant figures
