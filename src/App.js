@@ -779,7 +779,12 @@ function App() {
     }
   }
   function upgradeLevelUpgradeMultiplier() {
-    if (checkPointsForUpgrade(2.5e4 * Math.pow(10, upgradeLevelMultiplier))) {
+    if (
+      checkPointsForUpgrade(
+        points,
+        2.5e4 * Math.pow(10, upgradeLevelMultiplier),
+      )
+    ) {
       setTotalUpgradeLevelXp(
         (prevTotalUpgradeLevelXp) =>
           prevTotalUpgradeLevelXp + (upgradeLevelMultiplier + 1) * 4,
@@ -797,7 +802,7 @@ function App() {
     }
   }
   function upgradeLogLevelMultiplier() {
-    if (checkPointsForUpgrade(5e5 * Math.pow(10, logLevelMultiplier))) {
+    if (checkPointsForUpgrade(points, 5e5 * Math.pow(10, logLevelMultiplier))) {
       setTotalUpgradeLevelXp(
         (prevTotalUpgradeLevelXp) =>
           prevTotalUpgradeLevelXp + (logLevelMultiplier + 1) * 5,
