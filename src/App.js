@@ -394,7 +394,7 @@ function App() {
   function checkPointsForUpgrade(points, pointsRequired) {
     //check if user has enough points to upgrade
     if (pointsRequired !== 0 && points >= pointsRequired) {
-      //make sure points required is not 0 and user has enough points to upgrade
+      //make sure points required are not 0 and user has enough points to upgrade
       setTotalLogLevelXp(
         (prevTotalLogLevelXp) =>
           prevTotalLogLevelXp + Math.log(Math.max(pointsRequired + 1, 1)),
@@ -563,7 +563,7 @@ function App() {
     }
   }
   function upgradeAutoClickerBonus(level) {
-    //upgrade autoclicker bonus based on number of upgrades bought
+    //upgrade autoclicker bonus based on the number of upgrades bought
     if (
       checkPointsForUpgrade(
         points,
@@ -599,7 +599,7 @@ function App() {
     }
   }
   function upgradeAutoClickerBonusMultiplier(level) {
-    //upgrade autoclicker bonus multiplier based on number of upgrades bought with more expensive upgrades gets more multiplier
+    //upgrade autoclicker bonus multiplier based on the number of upgrades bought with more expensive upgrades gets more multiplier
     if (
       checkPointsForUpgrade(
         points,
@@ -636,7 +636,7 @@ function App() {
     }
   }
   function upgradeTimeMultiplierBonus() {
-    //upgrade time multiplier bonus based on number of seconds passed
+    //upgrade time multiplier bonus based on the number of seconds passed
     if (
       checkPointsForUpgrade(points, 2.5e3 * Math.pow(10, timeMultiplierBonus))
     ) {
@@ -657,7 +657,7 @@ function App() {
     }
   }
   function upgradeClickMultiplierBonus() {
-    //upgrade click multiplier bonus based on number of seconds passed
+    //upgrade click multiplier bonus based on the number of seconds passed
     if (
       checkPointsForUpgrade(points, 5e3 * Math.pow(10, clickMultiplierBonus))
     ) {
@@ -698,7 +698,7 @@ function App() {
       setAutoClickers((prevAutoClickers) => [
         ...prevAutoClickers,
         { value: 0, level: maxLevel + 1 },
-      ]); //append autoclickers value to end of array
+      ]); //append autoclickers value to the end of an array
       setAutoClickersMultiplier((prevAutoClickersMultiplier) => [
         ...prevAutoClickersMultiplier,
         { value: 1, level: maxLevel + 1 },
@@ -802,7 +802,7 @@ function App() {
     }
   }
   function upgradeLogLevelMultiplier() {
-    if (checkPointsForUpgrade(points, 5e4 * Math.pow(10, logLevelMultiplier))) {
+    if (checkPointsForUpgrade(points, 5e5 * Math.pow(10, logLevelMultiplier))) {
       setTotalUpgradeLevelXp(
         (prevTotalUpgradeLevelXp) =>
           prevTotalUpgradeLevelXp + (logLevelMultiplier + 1) * 5,
@@ -971,7 +971,7 @@ function App() {
           <button onClick={() => upgradeLogLevelMultiplier()}>
             Upgrade Log Level Multiplier
           </button>
-          <CostDisplay cost={5e4 * Math.pow(10, logLevelMultiplier)} />
+          <CostDisplay cost={5e5 * Math.pow(10, logLevelMultiplier)} />
         </td>
       </tr>
       <table>
