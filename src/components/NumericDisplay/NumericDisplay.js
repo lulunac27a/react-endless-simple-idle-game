@@ -7,7 +7,7 @@ function formatNumber(number = 0, shortForm = true) {
   if (shortForm) {
     //if short form is true
     const exponent = Math.floor(Math.log10(Math.abs(Math.max(number, 1)))); //exponent component of number
-    const exponent3 = Math.floor(exponent / 3) * 3; //exponent with multiple of 3 for engineering notation
+    const exponent3 = Math.floor(exponent / 3) * 3; //exponent with multiple of 3 integer numeric digits for engineering notation
     const prefixes = [
       '',
       'K',
@@ -31,7 +31,7 @@ function formatNumber(number = 0, shortForm = true) {
       'OD',
       'ND',
       'V',
-    ]; //numeric prefixes
+    ]; //numeric prefixes for large numbers
     if (Math.abs(number) < 1000) {
       //if number is less than 1 thousand
       return Math.min(
@@ -40,17 +40,16 @@ function formatNumber(number = 0, shortForm = true) {
       ).toString(); //return number rounded to nearest integer
     } else {
       //if number is 1 thousand or more
-      const roundedNumber = number.toPrecision(3); //round number to 3 significant figures
+      const mantissa = parseFloat(number) / Math.pow(10, exponent3); //get the mantissa value from 1 to 999
+      const roundedNumber = mantissa.toPrecision(3); //round number to 3 significant figures
       return (
-        Math.min(
-          999,
-          parseFloat(roundedNumber) / Math.pow(10, exponent3),
-        ).toPrecision(3) + prefixes[exponent3 / 3]
+        Math.min(999, Math.max(-999, Number(roundedNumber))).toPrecision(3) +
+        prefixes[exponent3 / 3]
       ); //return coefficient of engineering notation with numeric prefix
     }
   } else {
     //if short form is false
-    return Math.round(number).toString(); //return number rounded to nearest integer
+    return Math.round(number).toString(); //return the number rounded to nearest integer
   }
 }
 const NumericDisplay = (
