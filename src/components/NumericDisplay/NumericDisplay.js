@@ -40,11 +40,16 @@ function formatNumber(number = 0, shortForm = true) {
       ).toString(); //return number rounded to nearest integer
     } else {
       //if number is 1 thousand or more
-      const mantissa = parseFloat(number) / Math.pow(10, exponent3); //get the mantissa value from 1 to 999
+      const mantissa = parseFloat(number.toString()) / Math.pow(10, exponent3); //get the mantissa value from 1 to 999
       const roundedNumber = mantissa.toPrecision(3); //round number to 3 significant figures
       return (
-        Math.min(999, Math.max(-999, Number(roundedNumber))).toPrecision(3) +
-        prefixes[exponent3 / 3]
+        Math.min(
+          999,
+          Math.max(
+            -999,
+            Number(Math.abs(roundedNumber) * Math.sign(roundedNumber)),
+          ),
+        ).toPrecision(3) + prefixes[exponent3 / 3]
       ); //return coefficient of engineering notation with numeric prefix
     }
   } else {
