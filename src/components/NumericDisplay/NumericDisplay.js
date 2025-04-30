@@ -47,7 +47,10 @@ function formatNumber(number = 0, shortForm = true) {
           999,
           Math.max(
             -999,
-            Number(Math.abs(roundedNumber) * Math.sign(roundedNumber)),
+            Number(
+              Math.abs(Number(roundedNumber)) *
+                Math.sign(Number(roundedNumber)),
+            ),
           ),
         ).toPrecision(3) + prefixes[exponent3 / 3]
       ); //return coefficient of engineering notation with numeric prefix
