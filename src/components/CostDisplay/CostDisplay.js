@@ -8,7 +8,7 @@ const CostDisplay = (
 ) => (
   <div className={styles.CostDisplay} data-testid="CostDisplay">
     {/*display cost display with specified styles*/}
-    Cost:{" "}
+    Cost:{' '}
     <span id="cost-value">
       <NumericDisplay value={cost} />
     </span>

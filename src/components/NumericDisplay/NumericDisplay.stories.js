@@ -2,7 +2,7 @@
 import NumericDisplay from './NumericDisplay';
 
 export default {
-  title: "NumericDisplay",
+  title: 'NumericDisplay',
 };
 
 export const Default = () => <NumericDisplay />;
