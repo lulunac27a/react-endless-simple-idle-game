@@ -1,4 +1,4 @@
 .NumericDisplay {
-  font-weight: bold; /*bold numeric cost value*/
-  font-variant-numeric: tabular-nums; /*make all numeric values the same character width*/
+    font-weight: bold; /*bold numeric cost value*/
+    font-variant-numeric: tabular-nums; /*make all numeric values the same character width*/
 }

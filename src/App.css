@@ -1,25 +1,25 @@
 .App {
-  /*app content*/
-  text-align: center; /*center text for whole app*/
+    /*app content*/
+    text-align: center; /*center text for whole app*/
 }
 
 .App-header {
-  /*app header*/
-  background-color: #208040;
-  min-height: 10vh; /*set height to 10% of viewpoint height*/
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
+    /*app header*/
+    background-color: #208040;
+    min-height: 10vh; /*set height to 10% of viewpoint height*/
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    font-size: calc(10px + 2vmin);
+    color: white;
 }
 
 #points-display,
 #level-display {
-  font-weight: bold; /*bold the numeric values*/
+    font-weight: bold; /*bold the numeric values*/
 }
 
 p {
-  line-height: 120%; /*add some line spacing between paragraphs*/
+    line-height: 120%; /*add some line spacing between paragraphs*/
 }
