@@ -81,4 +81,5 @@ NumericDisplay.propTypes = {
 
 NumericDisplay.defaultProps = {};
 
+export { formatNumber };
 export default NumericDisplay;

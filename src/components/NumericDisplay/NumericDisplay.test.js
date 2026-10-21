@@ -20,7 +20,7 @@ describe("<NumericDisplay />", () => {
         const bigNumericValue = formatNumber(19283);
         const veryLargeNumericValue = formatNumber(7654321);
         expect(largeNumericValue).toBe("9.88K");
-        expect(bigNumericValue).toBe("19.28K");
+        expect(bigNumericValue).toBe("19.3K");
         expect(veryLargeNumericValue).toBe("7.65M");
     });
     test("it should render with large number without short format", () => {
