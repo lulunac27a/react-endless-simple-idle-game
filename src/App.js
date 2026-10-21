@@ -1,3 +1,4 @@
+import PrimaryColorsLandingPage from "./components/PrimaryColorsLandingPage/PrimaryColorsLandingPage";
 import CostDisplay from "./components/CostDisplay/CostDisplay";
 import NumericDisplay from "./components/NumericDisplay/NumericDisplay";
 import "./App.css";
@@ -8,6 +9,12 @@ import {
 } from "react-circular-progressbar";
 function App() {
     //app component
+    const [currentPage, setCurrentPage] = useState(
+        JSON.parse(localStorage.getItem("gameState")) &&
+        JSON.parse(localStorage.getItem("gameState")).currentPage
+            ? JSON.parse(localStorage.getItem("gameState")).currentPage
+            : "colors"
+    ); //set initial page to saved page or primary colors landing page
     const [points, setPoints] = useState(
         JSON.parse(localStorage.getItem("gameState"))
             ? JSON.parse(localStorage.getItem("gameState")).points
@@ -166,6 +173,7 @@ function App() {
             : 0,
     ); //set initial log level multiplier to 0
     const [gameState, setGameState] = useState({
+        currentPage: currentPage,
         points: points,
         pointsPerSecond: pointsPerSecond,
         maxLevel: maxLevel,
@@ -199,6 +207,7 @@ function App() {
     }); //set game state data
     const updateGameState = useCallback(() => {
         setGameState({
+            currentPage: currentPage,
             points: points,
             pointsPerSecond: pointsPerSecond,
             maxLevel: maxLevel,
@@ -232,6 +241,7 @@ function App() {
         }); //set game state data
         localStorage.setItem("gameState", JSON.stringify(gameState)); //save game state data to local storage
     }, [
+        currentPage,
         autoClickers,
         autoClickersBonus,
         autoClickersBonusMultiplier,
@@ -901,9 +911,26 @@ function App() {
         }
     }
 
+    if (currentPage === "colors") {
+        return (
+            <PrimaryColorsLandingPage
+                onNavigateToGame={() => setCurrentPage("game")}
+            />
+        );
+    }
+
     return (
         //dynamic app HTML output
         <div className="App">
+            <div style={{ padding: "1rem", backgroundColor: "#f8f9fa", textAlign: "left" }}>
+                <button
+                    onClick={() => setCurrentPage("colors")}
+                    style={{ padding: "0.5rem 1rem", cursor: "pointer" }}
+                    data-testid="back-to-colors-button"
+                >
+                    ← Back to Primary Colors Landing Page
+                </button>
+            </div>
             {/*app context*/}
             <header className="App-header">
                 {/*app header context*/}
